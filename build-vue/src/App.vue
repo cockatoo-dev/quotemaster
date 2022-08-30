@@ -1,85 +1,126 @@
 <script setup>
-import { RouterLink, RouterView } from 'vue-router'
-import HelloWorld from './components/HelloWorld.vue'
+    import { reactive, ref, onMounted } from "vue";
+    import { RouterView, useRoute, useRouter } from 'vue-router';
+    import * as config from "./config.js";
+
+    const apiOnline = ref(true);
+    const route = useRoute();
+    const router = useRouter();
+
+    // Test API connectivity
+    async function doHandshake () {
+        let handshake;
+        try {
+            handshake = await fetch(`${config.API_HOST}/handshake`);
+            if (handshake.ok) {
+                apiOnline.value = true;
+            } else {
+                apiOnline.value = false;
+            }
+        } catch {
+            apiOnline.value = false;
+        }
+    }
+    
+    onMounted(doHandshake);
+
+    function isRandom () {
+        return route.fullPath == "/random";
+    }
+    function isPopular () {
+        return route.fullPath == "/popular";
+    }
+    function isNew () {
+        return route.fullPath == "/new";
+    }
+    function goRandom () {
+        router.push("/random");
+    }
+    function goPopular () {
+        router.push("/popular");
+    }
+    function goNew () {
+        router.push("/new");
+    }
+
 </script>
 
 <template>
-  <header>
-    <img alt="Vue logo" class="logo" src="@/assets/logo.svg" width="125" height="125" />
-
-    <div class="wrapper">
-      <HelloWorld msg="You did it!" />
-
-      <nav>
-        <RouterLink to="/">Home</RouterLink>
-        <RouterLink to="/about">About</RouterLink>
-      </nav>
+    <div id="header">
+        <h1>Quotemaster</h1>
+        <p>Vue build v0.1.0</p>
     </div>
-  </header>
-
-  <RouterView />
+    <div id="no-api" v-if="!apiOnline">
+        <p>Unable to reach API server.</p>
+        <div class="button-container">
+            <button @click="doHandshake()">Retry</button>
+        </div>
+    </div>
+    <div id="content" v-else>
+        <div id="random" class="button-container">
+            <button :disabled="isRandom()" @click="goRandom()">Random quote</button>
+        </div>
+        <div id="popular" class="button-container">
+            <button :disabled="isPopular()" @click="goPopular()">Popular quote</button>
+        </div>
+        <div id="new" class="button-container">
+            <button :disabled="isNew()" @click="goNew()">Write your own!</button>
+        </div>
+        <div id="router">
+            <RouterView />
+        </div>
+    </div>
 </template>
 
 <style scoped>
-header {
-  line-height: 1.5;
-  max-height: 100vh;
-}
+    .button-container {
+        text-align: center;
+    }
+    #header h1 {
+        font-family: "Tahoma", sans-serif;
+        font-weight: bold;
+        font-size: 32px;
+        text-align: center;
+        line-height: 16px;
+    }
+    #header p {
+        font-family: "Tahoma", sans-serif;
+        text-align: center;
+    }
+    #no-api {
+        width: 340px;
+        margin: auto;
+        padding: 10px;
+        font-family: "Tahoma", sans-serif;
+        text-align: center;
+        background-color: #ffaaaa;
+    }
+    #content {
+        width: 360px;
+        margin: 0 auto;
+        display: grid;
+        grid-template-columns: auto auto auto;
+        grid-template-areas: 
+        "random popular new"
+        "router router router";
+    }
+    #random {
+        grid-area: random;
+    }
+    #popular {
+        grid-area: popular;
+    }
+    #new {
+        grid-area: new;
+    }
+    #router {
+        grid-area: router;
+        width:360px;
+        margin: auto;
+        padding-top:10px;
+    }
+    button {
+        margin: auto;
+    }
 
-.logo {
-  display: block;
-  margin: 0 auto 2rem;
-}
-
-nav {
-  width: 100%;
-  font-size: 12px;
-  text-align: center;
-  margin-top: 2rem;
-}
-
-nav a.router-link-exact-active {
-  color: var(--color-text);
-}
-
-nav a.router-link-exact-active:hover {
-  background-color: transparent;
-}
-
-nav a {
-  display: inline-block;
-  padding: 0 1rem;
-  border-left: 1px solid var(--color-border);
-}
-
-nav a:first-of-type {
-  border: 0;
-}
-
-@media (min-width: 1024px) {
-  header {
-    display: flex;
-    place-items: center;
-    padding-right: calc(var(--section-gap) / 2);
-  }
-
-  .logo {
-    margin: 0 2rem 0 0;
-  }
-
-  header .wrapper {
-    display: flex;
-    place-items: flex-start;
-    flex-wrap: wrap;
-  }
-
-  nav {
-    text-align: left;
-    margin-left: -1rem;
-    font-size: 1rem;
-
-    padding: 1rem 0;
-    margin-top: 1rem;
-  }
-}
 </style>
