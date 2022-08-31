@@ -17,13 +17,15 @@
             likeToggle.value = false;
             likeSuccess.value = false;
             shareToggle.value = false;
-            shareLink.value = `${config.HOST}/id/${props.quote.id}`;
+            shareLink.value = `${config.HOST}/#/id/${props.quote.id}`;
         }
     }
 
     async function likeQuote () {
         likeToggle.value = true;
-        let reqObj = {id:props.quote.id}
+        let reqObj = {
+            id: props.quote.id
+        }
         let res;
         try {
             res = await fetch(`${config.API_HOST}/quotemaster/like`, {
