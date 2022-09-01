@@ -71,12 +71,34 @@
         name.value = "";
         submitToggle.value = false;
         submitSuccess.value = false;
+        shareToggle.value = false;
     }
 </script>
 
 <template>
     <Navbar />
-    <div id="warning">
+    
+    <div id="submit-error" v-if="submitError">
+        <p>{{errorMessage}}</p>
+    </div>
+    <div id="submit-success" v-else-if="submitSuccess">
+        <p>Quote submitted!</p>
+
+        <div id="submit-actions">
+            <div>
+                <button @click="shareToggle = true" :disabled="shareToggle">Share this quote</button>
+            </div>
+            <div>
+                <button @click="reset">Write another quote</button>
+            </div>
+        </div>
+
+        <div id="share-link" v-if="shareToggle">
+            <p>Copy this link to share:</p>
+            <input type="text" :value="shareLink" disabled>
+        </div>
+    </div>
+    <div id="warning" v-else>
         <h2>Warning</h2>
         <p>Anything you submit here is publicly viewable. Do not submit any personal or sensitive information.</p>
     </div>
@@ -90,35 +112,55 @@
         <input type="text" id="name" v-model="name" :disabled="submitToggle">
         <p class="char-limit" :class="{warn:name.length > 40}">{{name.length}}/40</p>
 
-        <button type="submit" @click.prevent="submitQuote" :disabled="submitToggle">Submit!</button>
+        <button type="submit" @click.prevent="submitQuote()" :disabled="submitToggle">Submit quote</button>
     </form>
-
-    <div id="submit-error" v-if="submitError">
-        <p>{{errorMessage}}</p>
-    </div>
-
-    <div id="submit-success" v-if="submitSuccess">
-        <p>Quote submitted!</p>
-
-        <div id="submit-actions">
-            <div>
-                <button @click="shareToggle = true">Share this quote</button>
-            </div>
-            <div>
-                <button @click="reset">Write another quote</button>
-            </div>
-        </div>
-
-        <div id="share-link" v-if="shareToggle">
-            <p>Copy this link to share:</p>
-            <input type="text" :value="shareLink" disabled>
-        </div>
-    </div>
 </template>
 
 <style scoped>
     input, textarea {
         font-family: "Tahoma", sans-serif;
+    }
+    #submit-error {
+        background-color: #ffaaaa;
+        padding: 10px;
+        margin-top: 10px;
+        margin-bottom: 10px;
+    }
+    #submit-error p {
+        font-weight: bold;
+        margin: 0px;
+    }
+    #submit-success {
+        background-color: #aaffaa;
+        padding: 10px;
+        margin-top: 10px;
+        margin-bottom: 10px;
+    }
+    #submit-success p {
+        font-weight: bold;
+        margin: 0px;
+    }
+    #submit-actions {
+        display:grid;
+        grid-template-columns: 1fr 1fr;
+        padding-top: 10px;
+    }
+    #submit-actions div {
+        margin: auto;
+    }
+    #share-link {
+        align-items: center;
+        margin-top: 10px;
+    }
+    #share-link p {
+        font-weight: normal;
+    }
+    #share-link input {
+        width: 334px;
+        padding:2px;
+        border-width:1px;
+        font-family: "Tahoma", sans-serif;
+        font-size: 16px;
     }
     #warning {
         background-color: #ffffaa;
@@ -155,45 +197,5 @@
     }
     .warn {
         color:#ff0000;
-    }
-    #submit-error {
-        background-color: #ffaaaa;
-        padding: 10px;
-        margin-top: 10px;
-    }
-    #submit-error p {
-        font-weight: bold;
-        margin: 0px;
-    }
-    #submit-success {
-        background-color: #aaffaa;
-        padding: 10px;
-        margin-top: 10px;
-    }
-    #submit-success p {
-        font-weight: bold;
-        margin: 0px;
-    }
-    #submit-actions {
-        display:grid;
-        grid-template-columns: 1fr 1fr;
-        padding-top: 10px;
-    }
-    #submit-actions div {
-        margin: auto;
-    }
-    #share-link {
-        align-items: center;
-        margin-top: 10px;
-    }
-    #share-link p {
-        font-weight: normal;
-    }
-    #share-link input {
-        width: 334px;
-        padding:2px;
-        border-width:1px;
-        font-family: "Tahoma", sans-serif;
-        font-size: 16px;
     }
 </style>

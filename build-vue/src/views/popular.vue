@@ -40,7 +40,7 @@
     <div id="quote-display" v-else>
         <QuoteRenderer :quote="QUOTE" />
         <div id="reload-button" class="button-container">
-            <button @click="getQuote">Get another quote!</button>
+            <button @click="getQuote">Get another quote</button>
         </div>
     </div>
 </template>

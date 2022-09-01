@@ -7,7 +7,7 @@
             <button :disabled="this.$route.fullPath == `/popular`" @click="this.$router.push('/popular')">Popular quote</button>
         </div>
         <div class="button-container">
-            <button :disabled="this.$route.fullPath == '/new'" @click="this.$router.push('/new')">Write your own!</button>
+            <button :disabled="this.$route.fullPath == '/new'" @click="this.$router.push('/new')">Write your own</button>
         </div>
     </div>
 </template>

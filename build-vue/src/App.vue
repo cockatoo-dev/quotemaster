@@ -38,9 +38,7 @@
         </div>
     </div>
     <div id="content" v-else>
-        <div id="router">
-            <RouterView />
-        </div>
+        <RouterView />
     </div>
 </template>
 
@@ -67,11 +65,6 @@
     #content {
         width: 360px;
         margin: 0 auto;
-        display: grid;
-        grid-template-columns: auto auto auto;
-        grid-template-areas: 
-        "random popular new"
-        "router router router";
     }
     #random {
         grid-area: random;
