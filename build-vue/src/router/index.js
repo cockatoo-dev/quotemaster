@@ -4,7 +4,7 @@ import index from "../views/index.vue";
 import random from "../views/random.vue";
 import popular from "../views/popular.vue";
 import new_ from "../views/new.vue";
-import id_ from "../views/id.vue";
+import id from "../views/id.vue";
 
 
 const router = createRouter({
@@ -29,7 +29,7 @@ const router = createRouter({
         },
         {
             path: "/id/:id",
-            component: id_ 
+            component: id 
         }
     ]
 })

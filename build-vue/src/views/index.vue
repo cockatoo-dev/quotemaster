@@ -1,4 +1,9 @@
+<script setup>
+    import Navbar from "../components/navbar.vue";
+</script>
+
 <template>
+    <Navbar />
     <div id="placeholder">
         <p>Click one of the buttons above to get started!</p>
     </div>

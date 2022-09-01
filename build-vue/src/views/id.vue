@@ -3,6 +3,7 @@
     import { useRoute } from "vue-router";
 
     import * as config from "../config.js";
+    import Navbar from "../components/navbar.vue";
     import quoteRenderer from "../components/quoteRenderer.vue";
 
     const ROUTE = useRoute();
@@ -34,6 +35,7 @@
 </script>
 
 <template>
+    <Navbar />
     <div id="error-layover" v-if="error">
         <p>{{errorMessage}}</p>
         <div class="button-container">

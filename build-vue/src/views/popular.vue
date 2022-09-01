@@ -2,7 +2,8 @@
     import { ref, onMounted } from "vue";
 
     import * as config from "../config.js";
-    import quoteRenderer from "../components/quoteRenderer.vue"
+    import QuoteRenderer from "../components/quoteRenderer.vue"
+    import Navbar from "../components/navbar.vue";
 
     const QUOTE = ref(null);
     const error = ref(false);
@@ -29,6 +30,7 @@
 </script>
 
 <template>
+    <Navbar />
     <div id="error-layover" v-if="error">
         <p>Unable to load quote.</p>
         <div class="button-container">
@@ -36,7 +38,7 @@
         </div>
     </div>
     <div id="quote-display" v-else>
-        <quoteRenderer :quote="QUOTE" />
+        <QuoteRenderer :quote="QUOTE" />
         <div id="reload-button" class="button-container">
             <button @click="getQuote">Get another quote!</button>
         </div>

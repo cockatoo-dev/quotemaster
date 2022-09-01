@@ -23,32 +23,13 @@
     }
     
     onMounted(doHandshake);
-
-    function isRandom () {
-        return route.fullPath == "/random";
-    }
-    function isPopular () {
-        return route.fullPath == "/popular";
-    }
-    function isNew () {
-        return route.fullPath == "/new";
-    }
-    function goRandom () {
-        router.push("/random");
-    }
-    function goPopular () {
-        router.push("/popular");
-    }
-    function goNew () {
-        router.push("/new");
-    }
-
 </script>
 
 <template>
     <div id="header">
         <h1>Quotemaster</h1>
         <p>Vue build v0.1.0</p>
+        <p><a href="https://github.com/max8539/quotemaster/tree/main/build-vue">View source on Github</a></p>
     </div>
     <div id="no-api" v-if="!apiOnline">
         <p>Unable to reach API server.</p>
@@ -57,15 +38,6 @@
         </div>
     </div>
     <div id="content" v-else>
-        <div id="random" class="button-container">
-            <button :disabled="isRandom()" @click="goRandom()">Random quote</button>
-        </div>
-        <div id="popular" class="button-container">
-            <button :disabled="isPopular()" @click="goPopular()">Popular quote</button>
-        </div>
-        <div id="new" class="button-container">
-            <button :disabled="isNew()" @click="goNew()">Write your own!</button>
-        </div>
         <div id="router">
             <RouterView />
         </div>

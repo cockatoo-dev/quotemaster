@@ -2,6 +2,7 @@
     import { ref } from "vue";
 
     import * as config from "../config.js";
+    import Navbar from "../components/navbar.vue";
 
     let quote = ref("");
     let name = ref("");
@@ -74,6 +75,7 @@
 </script>
 
 <template>
+    <Navbar />
     <div id="warning">
         <h2>Warning</h2>
         <p>Anything you submit here is publicly viewable. Do not submit any personal or sensitive information.</p>
