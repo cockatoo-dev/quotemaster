@@ -45,13 +45,9 @@
 
 <style scoped>
     p {
-        font-family: "Tahoma", sans-serif;
         font-size: 24px;
         font-weight: bold;
         padding: 10px;
-        text-align: center;
-    }
-    .button-container {
         text-align: center;
     }
     #error-layover {

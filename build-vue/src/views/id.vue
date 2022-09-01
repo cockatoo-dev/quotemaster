@@ -47,7 +47,6 @@
 
 <style scoped>
     p {
-        font-family: "Tahoma", sans-serif;
         font-size: 24px;
         font-weight: bold;
         padding: 10px;

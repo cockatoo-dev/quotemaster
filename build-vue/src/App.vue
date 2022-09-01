@@ -77,21 +77,18 @@
         text-align: center;
     }
     #header h1 {
-        font-family: "Tahoma", sans-serif;
         font-weight: bold;
         font-size: 32px;
         text-align: center;
         line-height: 16px;
     }
     #header p {
-        font-family: "Tahoma", sans-serif;
         text-align: center;
     }
     #no-api {
         width: 340px;
         margin: auto;
         padding: 10px;
-        font-family: "Tahoma", sans-serif;
         text-align: center;
         background-color: #ffaaaa;
     }

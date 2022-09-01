@@ -115,12 +115,11 @@
 </template>
 
 <style scoped>
-    p, h2, label, input, textarea {
+    input, textarea {
         font-family: "Tahoma", sans-serif;
     }
     #warning {
         background-color: #ffffaa;
-        font-family: "Tahoma", sans-serif;
         padding: 10px;
         margin-bottom: 10px;
     }
