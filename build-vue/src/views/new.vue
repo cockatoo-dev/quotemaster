@@ -53,7 +53,7 @@
                 submitError.value = true;
             } else if (res.ok) {
                 resObj = await res.json();
-                shareLink.value = `${config.HOST}/#/id/${resObj.id}`
+                shareLink.value = `${config.HOST}/id/${resObj.id}`
                 submitSuccess.value = true;
             } else {
                 errorMessage.value = "Unable to submit quote.";

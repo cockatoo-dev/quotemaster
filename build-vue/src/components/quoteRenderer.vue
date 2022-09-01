@@ -17,7 +17,7 @@
             likeToggle.value = false;
             likeSuccess.value = false;
             shareToggle.value = false;
-            shareLink.value = `${config.HOST}/#/id/${props.quote.id}`;
+            shareLink.value = `${config.HOST}/id/${props.quote.id}`;
         }
     }
 
