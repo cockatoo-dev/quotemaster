@@ -1,8 +1,9 @@
 import React from 'react';
 import styled from "styled-components";
 
-import "./index.css"
+import "./index.css";
 import { RouterView } from "./router.jsx";
+
 import * as config from "./config.js";
 
 const Header = styled.h1`
@@ -33,23 +34,26 @@ const NoApi = styled.div`
     text-align: center;
 `
 
-async function doHandshake (updateStateFunc) {
-    let handshake;
-    try {
-        handshake = await fetch(`${config.API_HOST}/handshake`);
-        if (handshake.ok) {
-            return updateStateFunc(true);
-        } else {
-            return updateStateFunc(false);
-        }
-    } catch {
-        return updateStateFunc(false);
-    }
-}
+
 
 function Content () {
     const [apiOnline, apiOnlineUpdate] = React.useState(true);
-    React.useEffect(() => {doHandshake(apiOnlineUpdate)},[]);
+
+    async function doHandshake () {
+        let handshake;
+        try {
+            handshake = await fetch(`${config.API_HOST}/handshake`);
+            if (handshake.ok) {
+                apiOnlineUpdate(true);
+            } else {
+                apiOnlineUpdate(false);
+            }
+        } catch {
+            apiOnlineUpdate(false);
+        }
+    }
+
+    React.useEffect(() => {doHandshake()},[]);
 
     if (apiOnline) {return (
         <ContentArea>
@@ -65,7 +69,6 @@ function Content () {
     )}
 }
 
-// 
 export default function App () {return (
     <div>
         <Header>Quotemaster</Header>
