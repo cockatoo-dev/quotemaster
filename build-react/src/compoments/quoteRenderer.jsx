@@ -36,18 +36,6 @@ const ShareLinkBox = styled.input`
     font-size: 16px;
 `
 
-
-// function resetState (
-//     quote, likeToggleUpdate, likeSuccessUpdate, shareToggleUpdate, shareLinkUpdate
-// ) {
-//     likeToggleUpdate(false);
-//     likeSuccessUpdate(false);
-//     shareToggleUpdate(false);
-//     if (quote != null) {
-//         shareLinkUpdate(`${config.HOST}/id/${quote.id}`);
-//     }
-// }
-
 export default function QuoteRenderer (props) {
     const [likeToggle, likeToggleUpdate] = React.useState(false);
     const [likeSuccess, likeSuccessUpdate] = React.useState(false);
