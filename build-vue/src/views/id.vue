@@ -22,12 +22,15 @@
                 if (res.status == 400) {
                     errorObj = await res.json();
                     errorMessage.value = errorObj.errorMessage;
+                } else {
+                    errorMessage.value = "Unable to load quote.";
                 }
             } else {
                 QUOTE.value = await res.json();
             }
         } catch {
             error.value = true;
+            errorMessage.value = "Unable to load quote.";
         }
     }
 
@@ -48,12 +51,6 @@
 </template>
 
 <style scoped>
-    p {
-        font-size: 24px;
-        font-weight: bold;
-        padding: 10px;
-        text-align: center;
-    }
     .button-container {
         text-align: center;
     }
@@ -61,5 +58,6 @@
         background-color: #ffaaaa;
         margin: auto;
         padding:10px;
+        text-align: center;
     }
 </style>
