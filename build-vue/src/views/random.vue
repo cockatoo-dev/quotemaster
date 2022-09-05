@@ -46,16 +46,11 @@
 </template>
 
 <style scoped>
-    p {
-        font-size: 24px;
-        font-weight: bold;
-        padding: 10px;
-        text-align: center;
-    }
     #error-layover {
         background-color: #ffaaaa;
         margin: auto;
         padding: 10px;
+        text-align: center;
     }
     #reload-button {
         padding-top: 10px;
