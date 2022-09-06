@@ -9,8 +9,8 @@
     const ROUTE = useRoute();
     const ID = ROUTE.params.id;
     const QUOTE = ref(null);
-    let error = ref(false);
-    let errorMessage = ref("Unable to load quote.");
+    const error = ref(false);
+    const errorMessage = ref("Unable to load quote.");
 
 
     async function getQuote () {

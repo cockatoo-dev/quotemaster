@@ -4,14 +4,14 @@
     import * as config from "../config.js";
     import Navbar from "../components/navbar.vue";
 
-    let quote = ref("");
-    let name = ref("");
-    let submitToggle = ref(false);
-    let submitError = ref(false);
-    let submitSuccess = ref(false);
-    let errorMessage = ref("");
-    let shareToggle = ref(false);
-    let shareLink = ref("");
+    const quote = ref("");
+    const name = ref("");
+    const submitToggle = ref(false);
+    const submitError = ref(false);
+    const submitSuccess = ref(false);
+    const errorMessage = ref("");
+    const shareToggle = ref(false);
+    const shareLink = ref("");
 
     async function submitQuote () {
         submitToggle.value = true;
@@ -54,7 +54,7 @@
                 submitError.value = true;
             } else if (res.ok) {
                 resObj = await res.json();
-                shareLink.value = `${config.HOST}/id/${resObj.id}`
+                shareLink.value = `${config.HOST}/id/${resObj.id}`;
                 submitSuccess.value = true;
             } else {
                 errorMessage.value = "Unable to submit quote.";
@@ -142,7 +142,7 @@
     }
     #submit-actions {
         display:grid;
-        grid-template-columns: 1fr 1fr;
+        grid-template-columns: auto auto;
         padding-top: 10px;
     }
     #submit-actions div {

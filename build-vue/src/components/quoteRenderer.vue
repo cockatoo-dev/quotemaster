@@ -7,10 +7,10 @@
         quote: Object
     })
 
-    let likeToggle = ref(false);
-    let likeSuccess = ref(false);
-    let shareToggle = ref(false);
-    let shareLink = ref("");
+    const likeToggle = ref(false);
+    const likeSuccess = ref(false);
+    const shareToggle = ref(false);
+    const shareLink = ref("");
     
     function newQuoteState () {
         if (props.quote != null) {
@@ -93,7 +93,7 @@
     }
     #actions {
         display: grid;
-        grid-template-columns: 1fr 1fr;
+        grid-template-columns: auto auto;
     }
     #share-link {
         align-items: center;
