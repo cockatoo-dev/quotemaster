@@ -11,3 +11,6 @@
 .button-container {
     text-align: center;
 }
+.warn {
+    color: #ff0000;
+}
