@@ -1,29 +1,9 @@
-# build-vue
+# Quotemaster - Vue build
 
-This template should help get you started developing with Vue 3 in Vite.
+**A great place for sharing quotes! (maybe?)**
 
-## Recommended IDE Setup
+This small web app was created as a way for me to get to know frontend web frameworks like React and Vue.
 
-[VSCode](https://code.visualstudio.com/) + [Volar](https://marketplace.visualstudio.com/items?itemName=Vue.volar) (and disable Vetur) + [TypeScript Vue Plugin (Volar)](https://marketplace.visualstudio.com/items?itemName=Vue.vscode-typescript-vue-plugin).
+The code in this repository is only a frontend for Quotemaster. Quotemaster also makes use of a backend API which can be found [here](https://github.com/max8539/mini-apis).
 
-## Customize configuration
-
-See [Vite Configuration Reference](https://vitejs.dev/config/).
-
-## Project Setup
-
-```sh
-npm install
-```
-
-### Compile and Hot-Reload for Development
-
-```sh
-npm run dev
-```
-
-### Compile and Minify for Production
-
-```sh
-npm run build
-```
+The Vue build of Quotemaster is currently being hosted online at (link) (coming soon).

@@ -14,7 +14,6 @@
     const shareLink = ref("");
 
     async function submitQuote () {
-        submitToggle.value = true;
         submitError.value = false;
         
         if (quote.value == "") {
@@ -30,11 +29,12 @@
             errorMessage.value = "Name should be less than 40 characters long.";
             submitError.value = true;
         }
+
         if (submitError.value) {
-            submitToggle.value = false;
             return;
         }
 
+        submitToggle.value = true;
         let reqObj = {
             quote: quote.value,
             name: name.value
@@ -63,6 +63,10 @@
         } catch {
             errorMessage.value = "Unable to submit quote.";
             submitError.value = true;
+        } finally {
+            if (submitError.value) {
+                submitToggle.value = false;
+            }
         }
     }
 

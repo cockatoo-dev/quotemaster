@@ -1,13 +1,10 @@
 <script setup>
-    import { reactive, ref, onMounted } from "vue";
-    import { RouterView, useRoute, useRouter } from 'vue-router';
+    import { ref, onMounted } from "vue";
+    import { RouterView } from 'vue-router';
     import * as config from "./config.js";
 
     const apiOnline = ref(true);
-    const route = useRoute();
-    const router = useRouter();
 
-    // Test API connectivity
     async function doHandshake () {
         let handshake;
         try {
@@ -28,8 +25,8 @@
 <template>
     <div id="header">
         <h1>Quotemaster</h1>
-        <p>Vue build v0.1.0</p>
-        <p><a href="https://github.com/max8539/quotemaster/tree/main/build-vue">View source on Github</a></p>
+        <p>Vue build v0.2.0</p>
+        <p><a href="https://github.com/max8539/quotemaster/">View source on Github</a></p>
     </div>
     <div id="no-api" v-if="!apiOnline">
         <p>Unable to reach API server.</p>
