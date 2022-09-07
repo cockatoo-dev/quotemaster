@@ -53,8 +53,8 @@ export default function App () {
     return (
         <div>
             <Header>Quotemaster</Header>
-            <BuildInfo>React build v0.1.0</BuildInfo>
-            <BuildInfo><a href="https://github.com/max8539/quotemaster/tree/main/build-react">View source on Github</a></BuildInfo>
+            <BuildInfo>React build v0.2.0</BuildInfo>
+            <BuildInfo><a href="https://github.com/max8539/quotemaster/">View source on Github</a></BuildInfo>
             
             {apiOnline ? (
                 <ContentArea>

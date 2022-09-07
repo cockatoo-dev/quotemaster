@@ -33,7 +33,7 @@ const ShareHeader = styled.p`
     margin-bottom: 0px;
 `
 const ShareLinkBox = styled.input`
-    width: 354px;
+    width: 334px;
     padding:2px;
     border-width:1px;
     font-family: "Tahoma", sans-serif;
@@ -91,28 +91,34 @@ export default function New_ () {
 
     let messageBox;
 
-    async function submitQuote () {
-        updateSubmitToggle(true);
+    async function submitQuote (event) {
+        console.log("Submit");
+        event.preventDefault();
         updateSubmitError(false);
+        let submitErrorVar = false;
         
         if (quote == "") {
             updateErrorMessage("Please enter a quote.");
             updateSubmitError(true);
-        } else if (name.value == "") {
+            submitErrorVar = true;
+        } else if (name == "") {
             updateErrorMessage("Please enter a name.");
             updateSubmitError(true);
-        } else if (quote.value.length > 400) {
+            submitErrorVar = true;
+        } else if (quote.length > 400) {
             updateErrorMessage("Quote should be less than 400 characters long.");
             updateSubmitError(true);
-        } else if (name.value.length > 40) {
+            submitErrorVar = true;
+        } else if (name.length > 40) {
             updateErrorMessage("Name should be less than 40 characters long.");
             updateSubmitError(true);
+            submitErrorVar = true;
         }
-        if (submitError) {
-            updateSubmitToggle(false);
+        if (submitErrorVar) {
             return;
         }
 
+        updateSubmitToggle(true);
         let reqObj = {
             quote: quote,
             name: name
@@ -130,6 +136,7 @@ export default function New_ () {
                 resObj = await res.json();
                 updateErrorMessage(resObj.errorMessage);
                 updateSubmitError(true);
+                submitErrorVar = true;
             } else if (res.ok) {
                 resObj = await res.json();
                 updateShareLink(`${config.HOST}/id/${resObj.id}`);
@@ -137,10 +144,16 @@ export default function New_ () {
             } else {
                 updateErrorMessage("Unable to submit quote.");
                 updateSubmitError(true);
+                submitErrorVar = true;
             }
         } catch {
             updateErrorMessage("Unable to submit quote.");
             updateSubmitError(true);
+            submitErrorVar = true;
+        } finally {
+            if (submitErrorVar) {
+                updateSubmitToggle(false);
+            }
         }
     }
 
@@ -152,6 +165,13 @@ export default function New_ () {
         updateShareToggle(false);
     }
     
+    function formUpdateQuote (event) {
+        updateQuote(event.target.value);
+    }
+    function formUpdateName (event) {
+        updateName(event.target.value);
+    }
+
     if (submitError) {
         messageBox = (
             <ErrorBox>
@@ -164,10 +184,10 @@ export default function New_ () {
                 <BoxText>Quote submitted!</BoxText>
                 <SubmitActions>
                     <div className="button-container">
-                        <button>Share this quote</button>
+                        <button disabled={shareToggle} onClick={() => {updateShareToggle(true)}}>Share this quote</button>
                     </div>
                     <div className="button-container">
-                        <button>Write another quote</button>
+                        <button onClick={reset}>Write another quote</button>
                     </div>
                 </SubmitActions>
                 {shareToggle ? (
@@ -192,13 +212,13 @@ export default function New_ () {
             <Navbar />
             {messageBox}
             <form>
-                <FormLabel for="quote">Your quote</FormLabel>
-                <QuoteTextarea id="quote" rows="4"></QuoteTextarea>
-                <CharLimit>/400</CharLimit>
-                <FormLabel for="name">Your name</FormLabel>
-                <NameInput id="name"></NameInput>
-                <CharLimit>/40</CharLimit>
-                <button type="submit">Submit quote</button>
+                <FormLabel htmlFor="quote">Your quote</FormLabel>
+                <QuoteTextarea id="quote" name="quote" rows="4" disabled={submitToggle} value={quote} onInput={formUpdateQuote}></QuoteTextarea>
+                <CharLimit className={`${quote.length > 400 ? "warn" : ""}`}>{quote.length}/400</CharLimit>
+                <FormLabel htmlFor="name">Your name</FormLabel>
+                <NameInput id="name" name="name" disabled={submitToggle} value={name} onInput={formUpdateName}></NameInput>
+                <CharLimit className={`${name.length > 40 ? "warn" : ""}`}>{name.length}/40</CharLimit>
+                <button type="submit" disabled={submitToggle} onClick={submitQuote}>Submit quote</button>
             </form>
         </div>
     )
