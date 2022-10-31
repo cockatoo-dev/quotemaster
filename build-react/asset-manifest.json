@@ -1,0 +1,15 @@
+{
+  "files": {
+    "main.css": "/quotemaster/build-react/static/css/main.990be0f2.css",
+    "main.js": "/quotemaster/build-react/static/js/main.782da506.js",
+    "static/js/787.04a63121.chunk.js": "/quotemaster/build-react/static/js/787.04a63121.chunk.js",
+    "index.html": "/quotemaster/build-react/index.html",
+    "main.990be0f2.css.map": "/quotemaster/build-react/static/css/main.990be0f2.css.map",
+    "main.782da506.js.map": "/quotemaster/build-react/static/js/main.782da506.js.map",
+    "787.04a63121.chunk.js.map": "/quotemaster/build-react/static/js/787.04a63121.chunk.js.map"
+  },
+  "entrypoints": [
+    "static/css/main.990be0f2.css",
+    "static/js/main.782da506.js"
+  ]
+}
