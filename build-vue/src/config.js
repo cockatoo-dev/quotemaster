@@ -1,2 +1,2 @@
-export const HOST = "http://127.0.0.1:5173/#"
-export const API_HOST = "http://127.0.0.1:5678"
+export const HOST = "http://max8539.github.io/quotemaster/build-vue/#"
+export const API_HOST = "http://8106bus.alwaysdata.net"
