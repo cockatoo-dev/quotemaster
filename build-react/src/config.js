@@ -1,2 +1,2 @@
-export const HOST = "http://127.0.0.1:3000/#"
-export const API_HOST = "http://127.0.0.1:5678"
+export const HOST = "https://max8539.github.io/quotemaster/build-react/#"
+export const API_HOST = "https://8106bus.alwaysdata.net"

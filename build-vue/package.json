@@ -1,6 +1,7 @@
 {
   "name": "build-vue",
-  "version": "0.0.0",
+  "version": "0.2.0",
+  "homepage": "https://max8539.github.io/quotemaster/build-vue",
   "scripts": {
     "dev": "vite",
     "build": "vite build",
