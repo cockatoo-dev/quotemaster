@@ -1,5 +1,9 @@
-# Vue 3 + TypeScript + Vite
+# Quotemaster - Vue build
 
-This template should help get you started developing with Vue 3 and TypeScript in Vite. The template uses Vue 3 `<script setup>` SFCs, check out the [script setup docs](https://v3.vuejs.org/api/sfc-script-setup.html#sfc-script-setup) to learn more.
+**A great place for sharing quotes! (maybe?)**
 
-Learn more about the recommended Project Setup and IDE Support in the [Vue Docs TypeScript Guide](https://vuejs.org/guide/typescript/overview.html#project-setup).
+This small web app was created as a way for me to get to know frontend web frameworks like React and Vue.
+
+The code in this repository is only a frontend for Quotemaster. Quotemaster also makes use of a backend API which can be found [here](https://github.com/cockatoo-dev/quotemaster-api).
+
+The Vue build of Quotemaster is currently being hosted online at <https://cockatoo-dev.github.io/quotemaster/build-vue/#>

@@ -52,7 +52,7 @@ function App() {
   return (
     <div>
       <Header>Quotemaster</Header>
-      <BuildInfo>React build v0.2.0</BuildInfo>
+      <BuildInfo>React build v0.5.0</BuildInfo>
       <BuildInfo>
         <a 
           href="https://github.com/cockatoo-dev/quotemaster/"

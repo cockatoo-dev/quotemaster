@@ -24,7 +24,7 @@
 <template>
   <div id="header">
     <h1>Quotemaster</h1>
-    <p>Vue build v0.2.0</p>
+    <p>Vue build v0.5.0</p>
     <p>
       <a 
         href="https://github.com/cockatoo-dev/quotemaster/"
