@@ -22,7 +22,7 @@ export default function Id () {
   
   const getQuote = useCallback(async () => {
     try {
-      const res = await fetch(`${API_HOST}/id/${id}`)
+      const res = await fetch(`${API_HOST}/id?id=${id}`)
       if (!res.ok) {
         updateError(true)
         if (res.status === 400) {
