@@ -15,7 +15,7 @@
 
   const getQuote = async () => {
     try {
-      const res = await fetch(`${API_HOST}/id/${id}`)
+      const res = await fetch(`${API_HOST}/id?id=${id}`)
       if (!res.ok) {
         error.value = true
         if (res.status === 400) {
