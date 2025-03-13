@@ -1,3 +1,6 @@
+build-react/node_modules
+build-vue/node_modules
+
 # Logs
 logs
 *.log
