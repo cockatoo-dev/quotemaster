@@ -64,20 +64,22 @@
       <div class="grid grid-cols-2 py-2">
         <div class="pr-0.5">
           <Button 
-            :label="`${likeSuccess ? 'Liked' : 'Like'} this quote`"
             :disabled="likeToggle"
             class="block w-full text-center text-base font-bold"
             @click="likeQuote"
-          />
+          >
+            {{ likeSuccess ? 'Liked' : 'Like' }} this quote
+          </Button>
         </div>
         <div class="pl-0.5">
           <Button 
-            label="Share this quote"
             :disabled="shareToggle"
             color="secondary"
             class="block w-full text-center text-base font-bold"
             @click="() => {shareToggle = true}"
-          />
+          >
+            Share this quote
+          </Button>
         </div>
       </div>
       <div v-if="shareToggle" class="pt-1 pb-2">
@@ -92,14 +94,15 @@
           </div>
           <div class="pl-1">
             <Button 
-              :label="copyToggle ? 'Copied!' : 'Copy'"
               :disabled="copyToggle"
               class="text-base font-bold"
               @click="() => {
                 copy(shareLink)
                 copyToggle = true
               }"
-            />
+            >
+              {{ copyToggle ? 'Copied' : 'Copy' }}
+            </Button>
           </div>
         </div>
       </div>

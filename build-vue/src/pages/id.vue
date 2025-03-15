@@ -48,11 +48,12 @@
       <template #description>
         <div class="text-center">
           <Button 
-            label="Retry"
             color="error"
             class="text-base"
             @click="getQuote"
-          />
+          >
+            Retry
+          </Button>
         </div>
       </template>
     </Alert>

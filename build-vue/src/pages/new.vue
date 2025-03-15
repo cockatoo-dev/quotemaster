@@ -112,20 +112,22 @@
           <div class="grid grid-cols-2">
             <div class="pr-0.5">
               <Button 
-                label="Share this quote"
                 color="success"
                 class="block w-full text-center text-base font-bold"
                 :disabled="shareToggle"
                 @click="() => {shareToggle = true}"
-              />
+              >
+                Share this quote
+              </Button>
             </div>
             <div class="pl-0.5">
               <Button 
-                label="Write another quote"
                 color="success"
                 class="block w-full text-center text-base font-bold"
                 @click="reset"
-              />
+              >
+                Write another quote
+              </Button>
             </div>
           </div>
 
@@ -141,14 +143,15 @@
             </div>
             <div class="pl-1">
               <Button 
-                :label="copyToggle ? 'Copied!' : 'Copy'"
                 :disabled="copyToggle"
                 class="text-base font-bold"
                 @click="() => {
                   copy(shareLink)
                   copyToggle = true
                 }"
-              />
+              >
+                {{ copyToggle ? 'Copied' : 'Copy' }}
+              </Button>
             </div>
           </div>
         </div>
@@ -196,10 +199,11 @@
       <div class="pt-1">
         <Button 
           type="submit"
-          label="Submit Quote"
           :disabled="submitToggle"
           class="block w-full text-base text-center font-bold"
-        />
+        >
+          Submit Quote
+        </Button>
       </div>
     </form>
   </div>
