@@ -32,14 +32,13 @@
         <p class="pb-1 text-center">Vue build v0.9.0</p>
         <div class="text-center">
           <Button 
+            label="View source on Github" 
             variant="ghost" 
             class="text-base"
             to="https://github.com/cockatoo-dev/quotemaster/"
             target="_blank"
             rel="noreferrer noopener"
-          >
-            View source on Github
-          </Button>
+          />
         </div>
       </div>
       <div v-if="!apiOnline" class="p-1">
@@ -53,12 +52,11 @@
           <template #description>
             <div class="text-center">
               <Button 
+                label="Retry"
                 color="error"
                 class="text-base font-bold"
                 @click="doHandshake"
-              >
-                Retry
-              </Button>
+              />
             </div>
           </template>
         </Alert>

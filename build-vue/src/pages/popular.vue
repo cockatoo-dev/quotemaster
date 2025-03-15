@@ -39,12 +39,11 @@
       <template #description>
         <div class="text-center">
           <Button 
+            label="Retry"
             color="error"
             class="text-base"
             @click="getQuote"
-          >
-            Retry
-          </Button>
+          />
         </div>
       </template>
     </Alert>
@@ -52,12 +51,11 @@
       <QuoteRenderer :quote="quote" />
       <div class="pb-1 text-center">
         <Button 
+          label="Get another quote"
           variant="ghost"
           class="text-base"
           @click="getQuote"
-        >
-          Get another quote
-        </Button>
+        />
       </div>
     </div>
   </div>
