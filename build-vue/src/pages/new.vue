@@ -2,7 +2,12 @@
   import { ref } from "vue"
   import { API_HOST, HOST } from "../utils/config"
   import type { apiErrorType, apiIdType } from "../utils/types"
-import NavBar from "../components/NavBar.vue"
+  import NavBar from "../components/NavBar.vue"
+  import Alert from "@nuxt/ui/runtime/components/Alert.vue"
+  import Button from "@nuxt/ui/runtime/components/Button.vue"
+  import Input from "@nuxt/ui/runtime/components/Input.vue"
+  import Textarea from "@nuxt/ui/runtime/components/Textarea.vue"
+  import { useClipboard } from "@vueuse/core"
 
   const quote = ref("")
   const name = ref("")
@@ -12,6 +17,9 @@ import NavBar from "../components/NavBar.vue"
   const errorMessage = ref("")
   const shareToggle = ref(false)
   const shareLink = ref("")
+
+  const { copy } = useClipboard({legacy: true})
+  const copyToggle = ref(false)
 
   const submitQuote = async () => {
     submitError.value = false
@@ -79,134 +87,120 @@ import NavBar from "../components/NavBar.vue"
 </script>
 
 <template>
-  <NavBar />
-  
-  <div id="submit-error" v-if="submitError">
-    <p>{{errorMessage}}</p>
-  </div>
-  <div id="submit-success" v-else-if="submitSuccess">
-    <p>Quote submitted!</p>
+  <div>
+    <NavBar />
+    
+    <div class="pb-1">
+        <Alert
+        v-if="submitError"
+        color="error"
+        variant="subtle"
+      >
+        <template #title>
+          <div class="text-base text-center">{{ errorMessage }}</div>
+        </template>
+      </Alert>
+      <Alert 
+        v-else-if="submitSuccess"
+        color="success"
+        variant="subtle"
+      >
+        <template #title>
+          <div class="text-base font-bold">Quote submitted!</div>
+        </template>
+        <template #description>
+          <div class="grid grid-cols-2">
+            <div class="pr-0.5">
+              <Button 
+                label="Share this quote"
+                color="success"
+                class="block w-full text-center text-base font-bold"
+                :disabled="shareToggle"
+                @click="() => {shareToggle = true}"
+              />
+            </div>
+            <div class="pl-0.5">
+              <Button 
+                label="Write another quote"
+                color="success"
+                class="block w-full text-center text-base font-bold"
+                @click="reset"
+              />
+            </div>
+          </div>
 
-    <div id="submit-actions">
-      <div>
-        <button 
-          @click="() => {shareToggle = true}" 
-          :disabled="shareToggle"
-        >
-          Share this quote
-        </button>
-      </div>
-      <div>
-        <button @click="reset">Write another quote</button>
-      </div>
+          <div v-if="shareToggle" class="pt-1 pb-2">
+          <p>Copy this link to share:</p>
+          <div class="grid grid-cols-[1fr_auto] pt-1">
+            <div>
+              <Input 
+                :model-value="shareLink" 
+                disabled 
+                :ui="{root: 'w-full', base: 'text-base disabled:cursor-text'}"
+              />
+            </div>
+            <div class="pl-1">
+              <Button 
+                :label="copyToggle ? 'Copied!' : 'Copy'"
+                :disabled="copyToggle"
+                class="text-base font-bold"
+                @click="() => {
+                  copy(shareLink)
+                  copyToggle = true
+                }"
+              />
+            </div>
+          </div>
+        </div>
+        </template>
+      </Alert>
+      
+      <Alert 
+        v-else
+        color="warning"
+        variant="subtle"
+      >
+        <template #title>
+          <div class="text-base font-bold">Warning</div>
+        </template>
+        <template #description>
+          <div class="text-base">
+            Anything you submit here can be seen by anyone on the internet. Do not submit any personal or sensitive information.
+          </div>
+        </template>
+      </Alert>
     </div>
 
-    <div id="share-link" v-if="shareToggle">
-      <p>Copy this link to share:</p>
-      <input type="text" :value="shareLink" disabled>
-    </div>
+    <form @submit.prevent="submitQuote">
+      <label for="quote" class="block font-bold py-1">Your Quote</label>
+      <Textarea
+        id="quote"
+        v-model="quote"
+        :disabled="submitToggle"
+        autocomplete="off"
+        :rows="4"
+        :ui="{root: 'block w-full', base: 'text-base'}"
+      />
+      <p class="text-xs text-right" :class="{warn:quote.length > 400}">{{quote.length}}/400</p>
+
+      <label for="name" class="block font-bold py-1">Your Name</label>
+      <Input
+        id="name"
+        v-model="name"
+        :disabled="submitToggle"
+        autocomplete="off"
+        :ui="{root: 'block w-full', base: 'text-base'}"
+      />
+      <p class="text-xs text-right" :class="{warn:name.length > 40}">{{name.length}}/40</p>
+
+      <div class="pt-1">
+        <Button 
+          type="submit"
+          label="Submit Quote"
+          :disabled="submitToggle"
+          class="block w-full text-base text-center font-bold"
+        />
+      </div>
+    </form>
   </div>
-  <div id="warning" v-else>
-    <h2>Warning</h2>
-    <p>
-      Anything you submit here is publicly viewable. Do not submit any personal or sensitive information.
-    </p>
-  </div>
-
-  <form @submit.prevent="submitQuote">
-    <label for="quote">Your quote</label>
-    <textarea id="quote" rows="4" v-model="quote" :disabled="submitToggle" />
-    <p class="char-limit" :class="{warn:quote.length > 400}">{{quote.length}}/400</p>
-
-    <label for="name">Your name</label>
-    <input type="text" id="name" v-model="name" :disabled="submitToggle">
-    <p class="char-limit" :class="{warn:name.length > 40}">{{name.length}}/40</p>
-
-    <button type="submit" :disabled="submitToggle">Submit quote</button>
-  </form>
 </template>
-
-<style scoped>
-  input, textarea {
-    font-family: "Open Sans", sans-serif;
-  }
-  #submit-error {
-    font-family: "Open Sans", sans-serif;  
-    background-color: #ffaaaa;
-    padding: 10px;
-    margin-top: 10px;
-    margin-bottom: 10px;
-  }
-  #submit-error p {
-    font-weight: bold;
-    margin: 0px;
-  }
-  #submit-success {
-    background-color: #aaffaa;
-    padding: 10px;
-    margin-top: 10px;
-    margin-bottom: 10px;
-  }
-  #submit-success p {
-    font-weight: bold;
-    margin: 0px;
-  }
-  #submit-actions {
-    display:grid;
-    grid-template-columns: auto auto;
-    padding-top: 10px;
-  }
-  #submit-actions div {
-    margin: auto;
-  }
-  #share-link {
-    align-items: center;
-    margin-top: 10px;
-  }
-  #share-link p {
-    font-weight: normal;
-  }
-  #share-link input {
-    width: 334px;
-    padding:2px;
-    border-width:1px;
-    font-family: "Open Sans", sans-serif;
-    font-size: 16px;
-  }
-  #warning {
-    background-color: #ffffaa;
-    padding: 10px;
-    margin-bottom: 10px;
-  }
-  #warning h2 {
-    font-size: 16px;
-    font-weight: bold;
-    margin-top:0px;
-    margin-bottom: 5px;
-  }
-  #warning p {
-    margin:0px;
-  }
-  #quote {
-    width: 354px;
-    padding:2px;
-    border-width:1px;
-    font-size: 16px;
-  }
-  #name {
-    width: 354px;
-    padding:2px;
-    border-width:1px;
-    font-size: 16px;
-  }
-  label {
-    font-weight: bold;
-  }
-  .char-limit {
-    margin-top: 0px;
-    text-align: right;
-  }
-  .warn {
-    color:#ff0000;
-  }
-</style>

@@ -4,6 +4,8 @@
   import QuoteRenderer from "../components/QuoteRenderer.vue"
   import { API_HOST } from "../utils/config"
   import type { apiQuoteType } from "../utils/types"
+  import Alert from "@nuxt/ui/runtime/components/Alert.vue"
+  import Button from "@nuxt/ui/runtime/components/Button.vue"
 
   const quote = ref<apiQuoteType | null>(null)
   const error = ref(false)
@@ -28,30 +30,33 @@
 </script>
 
 <template>
-  <NavBar />
-  <div id="error-layover" v-if="error">
-    <p>Unable to load quote.</p>
-    <div class="button-container">
-      <button @click="getQuote">Retry</button>
-    </div>
-  </div>
-  <div v-else>
-    <QuoteRenderer :quote="quote" />
-    <div id="reload-button" class="button-container">
-      <button @click="getQuote">Get another quote</button>
+  <div>
+    <NavBar />
+    <Alert v-if="error" color="error" variant="subtle">
+      <template #title>
+        <div class="text-base text-center">Unable to load quote.</div>
+      </template>
+      <template #description>
+        <div class="text-center">
+          <Button 
+            label="Retry"
+            color="error"
+            class="text-base"
+            @click="getQuote"
+          />
+        </div>
+      </template>
+    </Alert>
+    <div v-else>
+      <QuoteRenderer :quote="quote" />
+      <div class="pb-1 text-center">
+        <Button 
+          label="Get another quote"
+          variant="ghost"
+          class="text-base"
+          @click="getQuote"
+        />
+      </div>
     </div>
   </div>
 </template>
-
-<style scoped>
-  #error-layover {
-    background-color: #ffaaaa;
-    margin: auto;
-    padding: 10px;
-    font-family: 'Open Sans', sans-serif;
-    text-align: center;
-  }
-  #reload-button {
-    padding-top: 10px;
-  }
-</style>

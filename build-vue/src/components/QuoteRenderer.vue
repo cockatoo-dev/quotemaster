@@ -1,7 +1,10 @@
 <script setup lang="ts">
   import { ref, watch } from "vue"
-import type { apiQuoteType } from "../utils/types";
-import { API_HOST, HOST } from "../utils/config";
+  import type { apiQuoteType } from "../utils/types";
+  import { API_HOST, HOST } from "../utils/config";
+  import Button from "@nuxt/ui/runtime/components/Button.vue";
+  import Input from "@nuxt/ui/runtime/components/Input.vue";
+  import { useClipboard } from "@vueuse/core";
 
   const props = defineProps<{
     quote: apiQuoteType | null
@@ -11,7 +14,10 @@ import { API_HOST, HOST } from "../utils/config";
   const likeSuccess = ref(false)
   const shareToggle = ref(false)
   const shareLink = ref("")
-  
+
+  const { copy } = useClipboard({legacy: true})
+  const copyToggle = ref(false)
+
   const newQuoteState = () => {
     if (props.quote != null) {
       likeToggle.value = false
@@ -48,72 +54,55 @@ import { API_HOST, HOST } from "../utils/config";
 </script>
 
 <template>
-  <div id="placeholder" v-if="quote === null">
-    <p>Loading quote...</p>
-  </div>
-  <div v-else>
-    <p id="quote">{{quote.quote}}</p>
-    <p id="name">- {{quote.name}}</p>
-    <div id="actions">
-      <div class="button-container">
-        <button 
-          :disabled="likeToggle" 
-          @click="likeQuote"
-        >
-          {{likeSuccess ? "Liked" : "Like"}} this quote
-        </button>
-      </div>
-      <div class="button-container">
-        <button 
-          :disabled="shareToggle" 
-          @click="() => {shareToggle = true}"
-        >
-          Share this quote
-        </button>
-      </div>
+  <div>
+    <div v-if="quote === null">
+      <p class="pt-2 text-2xl text-center font-bold">Loading quote...</p>
     </div>
-    <div id="share-link" v-if="shareToggle">
-      <p>Copy this link to share:</p>
-      <input type="text" :value="shareLink" disabled>
+    <div v-else>
+      <p class="pt-4 pb-2 text-justify indent-12">{{quote.quote}}</p>
+      <p class="pt-2 pb-4 text-right italic">- {{quote.name}}</p>
+      <div class="grid grid-cols-2 py-2">
+        <div class="pr-0.5">
+          <Button 
+            :label="`${likeSuccess ? 'Liked' : 'Like'} this quote`"
+            :disabled="likeToggle"
+            class="block w-full text-center text-base font-bold"
+            @click="likeQuote"
+          />
+        </div>
+        <div class="pl-0.5">
+          <Button 
+            label="Share this quote"
+            :disabled="shareToggle"
+            color="secondary"
+            class="block w-full text-center text-base font-bold"
+            @click="() => {shareToggle = true}"
+          />
+        </div>
+      </div>
+      <div v-if="shareToggle" class="pt-1 pb-2">
+        <p>Copy this link to share:</p>
+        <div class="grid grid-cols-[1fr_auto] pt-1">
+          <div>
+            <Input 
+              :model-value="shareLink" 
+              disabled 
+              :ui="{root: 'w-full', base: 'text-base disabled:cursor-text'}"
+            />
+          </div>
+          <div class="pl-1">
+            <Button 
+              :label="copyToggle ? 'Copied!' : 'Copy'"
+              :disabled="copyToggle"
+              class="text-base font-bold"
+              @click="() => {
+                copy(shareLink)
+                copyToggle = true
+              }"
+            />
+          </div>
+        </div>
+      </div>
     </div>
   </div>
 </template>
-
-<style scoped>
-  .button-container {
-    text-align: center;
-  }
-  p {
-    font-family: "Open Sans", sans-serif;
-  }
-  #placeholder p {
-  text-align: center;
-  font-size: 24px;
-  font-weight: bold;
-  }
-  #quote {
-    text-align: justify;
-    text-indent: 2em;
-  }
-  #name {
-    text-align: right;
-    font-style: italic;
-  }
-  #actions {
-    display: grid;
-    grid-template-columns: auto auto;
-  }
-  #share-link {
-    align-items: center;
-  }
-  #share-link p {
-    margin-bottom: 0px;
-  }
-  #share-link input {
-    width: 354px;
-    padding:2px;
-    border-width:1px;
-    font-family: "Open Sans", sans-serif;
-    font-size: 16px;
-  }
-</style>
