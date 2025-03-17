@@ -2,6 +2,9 @@
   import { ref, onMounted } from "vue"
   import { RouterView } from 'vue-router'
   import { API_HOST } from "./utils/config"
+  import App from "@nuxt/ui/runtime/components/App.vue"
+  import Button from "@nuxt/ui/runtime/components/Button.vue"
+  import Alert from "@nuxt/ui/runtime/components/Alert.vue"
 
   const apiOnline = ref(true)
 
@@ -22,57 +25,47 @@
 </script>
 
 <template>
-  <div id="header">
-    <h1>Quotemaster</h1>
-    <p>Vue build v0.5.0</p>
-    <p>
-      <a 
-        href="https://github.com/cockatoo-dev/quotemaster/"
-        rel="noreferrer noopener"
-      >
-        View source on Github
-      </a>
-    </p>
-  </div>
-  <div id="no-api" v-if="!apiOnline">
-    <p>Unable to reach API server.</p>
-    <div class="button-container">
-      <button @click="doHandshake()">Retry</button>
+  <App>
+    <div class="w-11/12 max-w-[640px] mx-auto">
+      <div class="p-1">
+        <h1 class="py-2 text-center text-4xl font-bold">Quotemaster</h1>
+        <p class="pb-1 text-center">Vue build v0.9.0</p>
+        <div class="text-center">
+          <Button 
+            color="primary"
+            variant="ghost" 
+            class="text-base font-normal"
+            to="https://github.com/cockatoo-dev/quotemaster/"
+            target="_blank"
+            rel="noreferrer noopener"
+          >
+            View source on Github
+          </Button>
+        </div>
+      </div>
+      <div v-if="!apiOnline" class="py-1">
+        <Alert
+          color="error"
+          variant="subtle"
+          :ui="{title: 'pb-1 text-center text-base font-normal', description: 'mx-auto'}"
+          title="Unable to reach API server."
+        >
+          <template #description>
+            <div>
+              <Button 
+                color="error"
+                class="text-base font-bold"
+                @click="doHandshake"
+              >
+                Retry
+              </Button>
+            </div>
+          </template>
+        </Alert>
+      </div>
+      <div class="pt-1" v-else>
+        <RouterView />
+      </div>
     </div>
-  </div>
-  <div id="content" v-else>
-    <RouterView />
-  </div>
+  </App>
 </template>
-
-<style scoped>
-  .button-container {
-    text-align: center;
-  }
-  #header h1 {
-    font-family: "Open Sans", sans-serif;
-    font-weight: bold;
-    font-size: 32px;
-    text-align: center;
-    line-height: 16px;
-  }
-  #header p {
-    font-family: "Open Sans", sans-serif;
-    text-align: center;
-  }
-  #no-api {
-    width: 340px;
-    margin: auto;
-    padding: 10px;
-    font-family: "Open Sans", sans-serif;
-    text-align: center;
-    background-color: #ffaaaa;
-  }
-  #content {
-    width: 360px;
-    margin: 0 auto;
-  }
-  button {
-    margin: auto;
-  }
-</style>

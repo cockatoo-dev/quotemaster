@@ -5,6 +5,8 @@
   import { API_HOST } from "../utils/config"
   import QuoteRenderer from "../components/QuoteRenderer.vue"
   import type { apiErrorType, apiQuoteType } from "../utils/types"
+  import Alert from "@nuxt/ui/runtime/components/Alert.vue"
+  import Button from "@nuxt/ui/runtime/components/Button.vue"
 
   const route = useRoute()
   const id = route.params.id
@@ -37,27 +39,29 @@
 </script>
 
 <template>
-  <NavBar />
-  <div id="error-layover" v-if="error">
-    <p>{{errorMessage}}</p>
-    <div class="button-container">
-      <button @click="getQuote">Retry</button>
+  <div>
+    <NavBar />
+    <Alert 
+      v-if="error" 
+      color="error" 
+      variant="subtle"
+      :ui="{title: 'pb-1 text-center text-base font-normal', description: 'mx-auto'}"
+      :title="errorMessage"
+    >
+      <template #description>
+        <div>
+          <Button 
+            color="error"
+            class="text-base font-bold"
+            @click="getQuote"
+          >
+            Retry
+          </Button>
+        </div>
+      </template>
+    </Alert>
+    <div v-else>
+      <QuoteRenderer :quote="quote" />
     </div>
   </div>
-  <div id="quote-display" v-else>
-    <QuoteRenderer :quote="quote" />
-  </div>
 </template>
-
-<style scoped>
-  .button-container {
-    text-align: center;
-  }
-  #error-layover {
-    background-color: #ffaaaa;
-    margin: auto;
-    padding:10px;
-    font-family: "Open Sans", sans-serif;
-    text-align: center;
-  }
-</style>

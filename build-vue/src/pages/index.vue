@@ -3,18 +3,10 @@
 </script>
 
 <template>
-  <NavBar />
-  <div id="placeholder">
-    <p>Click one of the buttons above to get started!</p>
+  <div>
+    <NavBar />
+    <div>
+      <p class="pt-2 text-2xl text-center font-bold">Click one of the links above to get started!</p>
+    </div>
   </div>
 </template>
-
-<style scoped>
-  #placeholder p {
-    font-family: "Open Sans", sans-serif;
-    font-size: 24px;
-    font-weight: bold;
-    text-align: center;
-    margin: auto;
-  }
-</style>

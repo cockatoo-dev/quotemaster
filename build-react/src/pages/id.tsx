@@ -1,18 +1,10 @@
 import { useParams } from "react-router"
-import styled from "styled-components"
 import { useCallback, useEffect, useState } from "react"
 import NavBar from "../components/NavBar.js"
 import QuoteRenderer from "../components/QuoteRenderer"
 import { apiErrorType, apiQuoteType } from "../utils/types"
 import { API_HOST } from "../utils/config"
-
-const ErrorLayover = styled.div`
-  font-family: "Open Sans", sans-serif;
-  text-align: center;
-  background-color: #ffaaaa;
-  margin: auto;
-  padding: 10px;
-`
+import { Alert, Button } from "@heroui/react"
 
 export default function Id () {
   const id = useParams().id
@@ -46,10 +38,24 @@ export default function Id () {
     <div>
       <NavBar />
       {error ? (
-        <ErrorLayover>
-          <p>{errorMessage}</p>
-          <button onClick={getQuote}>Retry</button>
-        </ErrorLayover>
+        <Alert 
+          hideIcon
+          color="danger"
+          variant="faded"
+          classNames={{mainWrapper: 'ms-0', title: 'pb-1 text-base text-center', description: 'mx-auto'}}
+          title={errorMessage}
+          description={
+            <div>
+              <Button
+                color='danger'
+                className='text-base font-bold'
+                onPress={getQuote}
+              >
+                Retry
+              </Button>
+            </div>
+          }
+        />
       ) : (
         <div>
           <QuoteRenderer quote={quote} />

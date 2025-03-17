@@ -1,38 +1,40 @@
-<script setup lang="ts"></script>
+<script setup lang="ts">
+  import Button from '@nuxt/ui/runtime/components/Button.vue'
+</script>
 
 <template>
-  <div id="nav">
-    <div class="button-container">
-      <button 
-        :disabled="$route.fullPath === '/random'" 
-        @click="$router.push('/random')"
-      >
-        Random quote
-      </button>
-    </div>
-    <div class="button-container">
-      <button 
-        :disabled="$route.fullPath === `/popular`" 
-        @click="$router.push('/popular')"
-      >
-        Popular quote
-      </button>
-    </div>
-    <div class="button-container">
-      <button 
-        :disabled="$route.fullPath === '/new'" 
-        @click="$router.push('/new')"
-      >
-        Write your own
-      </button>
+  <div class="pb-2">
+    <div class="sm:grid sm:grid-cols-3 gap-2 border-y border-y-green-400 dark:border-y-green-500">
+      <div class="py-1">
+        <Button 
+          color="primary"
+          variant="ghost"
+          class="block w-full text-base text-center font-normal"
+          to="/random"
+        >
+          Random Quote
+        </Button>
+      </div>
+      <div class="py-1">
+        <Button 
+          color="primary"
+          variant="ghost"
+          class="block w-full text-base text-center font-normal"
+          to="/popular"
+        >
+          Popular Quote
+        </Button>
+      </div>
+      <div class="py-1">
+        <Button 
+          color="primary"
+          variant="ghost"
+          class="block w-full text-base text-center font-normal"
+          to="/new"
+        >
+          Write Your Own
+        </Button>
+      </div>
     </div>
   </div>
 </template>
-
-<style scoped>
-  #nav {
-    display: grid;
-    grid-template-columns: auto auto auto;
-    margin-bottom: 10px;
-  }
-</style>

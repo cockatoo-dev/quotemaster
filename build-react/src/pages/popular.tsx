@@ -1,19 +1,8 @@
 import { useEffect, useState } from "react"
-import styled from "styled-components"
 import { API_HOST } from "../utils/config"
 import NavBar from "../components/NavBar"
 import QuoteRenderer from "../components/QuoteRenderer"
-
-const ErrorLayover = styled.div`
-  font-family: "Open Sans", sans-serif;
-  text-align: center;
-  background-color: #ffaaaa;
-  margin: auto;
-  padding: 10px;
-`
-const ReloadButton = styled.button`
-  margin-top: 10px;
-`
+import { Alert, Button } from "@heroui/react"
 
 export default function Popular () {
   const [quote, updateQuote] = useState(null)
@@ -41,15 +30,36 @@ export default function Popular () {
     <div>
       <NavBar />
       {error ? (
-        <ErrorLayover>
-          <p>Unable to load quote.</p>
-          <button onClick={getQuote}>Retry</button>
-        </ErrorLayover>
+        <Alert 
+          hideIcon
+          color="danger"
+          variant="faded"
+          classNames={{mainWrapper: 'ms-0', title: 'pb-1 text-base text-center', description: 'mx-auto'}}
+          title="Unable to load quote."
+          description={
+            <div>
+              <Button
+                color='danger'
+                className='text-base font-bold'
+                onPress={getQuote}
+              >
+                Retry
+              </Button>
+            </div>
+          }
+        />
       ) : (
         <div>
           <QuoteRenderer quote={quote} />
-          <div className="button-container">
-            <ReloadButton onClick={getQuote}>Get another quote</ReloadButton>
+          <div className="pb-1 text-center">
+            <Button
+              color="primary"
+              variant="light"
+              className="text-base"
+              onPress={getQuote}
+            >
+              Get another quote
+            </Button>
           </div>
         </div>
       )}

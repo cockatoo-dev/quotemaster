@@ -1,41 +1,8 @@
-import styled from "styled-components"
-
 import { useEffect, useState } from "react"
 import { apiQuoteType } from "../utils/types"
 import { API_HOST, HOST } from "../utils/config"
-
-const Placeholder = styled.p`
-  font-family: "Open Sans", sans-serif;
-  font-size: 24px;
-  font-weight: bold;
-  text-align: center;
-  margin: 0px;
-`
-const QuoteBody = styled.p`
-  font-family: "Open Sans", sans-serif;
-  text-align: justify;
-  text-indent: 2em;
-`
-const QuoteName = styled.p`
-  font-family: "Open Sans", sans-serif;
-  text-align: right;
-  font-style: italic;
-`
-const QuoteActions = styled.div`
-  display: grid;
-  grid-template-columns: auto auto;
-`
-const ShareHeader = styled.p`
-  font-family: "Open Sans", sans-serif;
-  margin-bottom: 0px;
-`
-const ShareLinkBox = styled.input`
-  width: 354px;
-  padding:2px;
-  border-width:1px;
-  font-family: "Open Sans", sans-serif;
-  font-size: 16px;
-`
+import { Button, Input } from "@heroui/react"
+import { useCopyToClipboard } from "@uidotdev/usehooks"
 
 type propsType = {
   quote: apiQuoteType | null
@@ -46,6 +13,17 @@ export default function QuoteRenderer (props: propsType) {
   const [likeSuccess, likeSuccessUpdate] = useState(false)
   const [shareToggle, shareToggleUpdate] = useState(false)
   const [shareLink, shareLinkUpdate] = useState("")
+
+  const copy = useCopyToClipboard()[1]
+  const [copyToggle, copyToggleUpdate] = useState(false)
+
+  const copyShareLink = async () => {
+    await copy(shareLink)
+    copyToggleUpdate(true)
+    setTimeout(() => {
+      copyToggleUpdate(false)
+    }, 2000);
+  }
 
   const newQuoteState = () => {
     likeToggleUpdate(false)
@@ -85,37 +63,67 @@ export default function QuoteRenderer (props: propsType) {
   }
 
   useEffect(newQuoteState, [props.quote])
-
-  if (props.quote == null) {
-    return <Placeholder>Loading quote...</Placeholder>
-  } else { 
-    return (
-      <div>
-        <QuoteBody>{props.quote.quote}</QuoteBody>
-        <QuoteName>- {props.quote.name}</QuoteName>
-        <QuoteActions>
-          <div className="button-container">
-            <button 
-              disabled={likeToggle} 
-              onClick={likeQuote}
-            >
-              {likeSuccess ? "Liked" : "Like"} this quote
-            </button>
+ 
+  return (
+    <div>
+      {props.quote === null ? (
+        <div>
+          <p className="pt-2 text-2xl text-center font-bold">Loading quote...</p>
+        </div>
+      ) : (
+        <div>
+          <p className="pt-4 pb-2 text-justify indent-12">{props.quote.quote}</p>
+          <p className="pt-2 pb-4 text-right italic">- {props.quote.name}</p>
+          <div className="sm:grid sm:grid-cols-2 py-2">
+            <div className="pb-1 sm:pb-0 sm:pr-0.5">
+              <Button
+                isDisabled={likeToggle}
+                color="primary"
+                className="w-full text-base font-bold"
+                onPress={likeQuote}
+              >
+                {likeSuccess ? 'Liked this quote' : 'Like this quote'}
+              </Button>
+            </div>
+            <div className="pb-1 sm:pb-0 sm:pl-0.5">
+              <Button
+                isDisabled={shareToggle}
+                color="secondary"
+                className="w-full text-base font-bold"
+                onPress={() => {shareToggleUpdate(true)}}
+              >
+                Share this quote
+              </Button>
+            </div>
           </div>
-          <div className="button-container">
-            <button 
-              disabled={shareToggle} 
-              onClick={() => {shareToggleUpdate(true)}}
-            >
-              Share this quote
-            </button>
+        </div>
+      )}
+      {shareToggle && (
+        <div className="pt-1 pb-2">
+          <p>Copy this link to share:</p>
+          <div className="grid grid-cols-[1fr_auto] pt-1">
+            <div>
+              <Input 
+                value={shareLink}
+                isDisabled
+                variant="bordered"
+                classNames={{base: 'w-full', input: 'text-base cursor-text pointer-events-auto'}}
+              />
+            </div>
+            <div className="pl-1">
+              <Button 
+                isDisabled={copyToggle}
+                color="primary"
+                className="text-base font-bold"
+                onPress={copyShareLink}
+              >
+                {copyToggle ? 'Copied!' : 'Copy'}
+              </Button>
+            </div>
           </div>
-        </QuoteActions>
-        {shareToggle && (<div>
-          <ShareHeader>Copy this link to share:</ShareHeader>
-          <ShareLinkBox type="text" value={shareLink} disabled />
-        </div>)}
-      </div>
-    )
-  }
+        </div>
+      )}
+    </div>
+  )
 }
+

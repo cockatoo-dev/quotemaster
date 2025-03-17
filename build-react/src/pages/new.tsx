@@ -1,82 +1,9 @@
-import { FormEvent, ReactElement, useState } from "react"
-import styled from "styled-components"
+import { FormEvent, useState } from "react"
 import { API_HOST, HOST } from "../utils/config"
 import NavBar from "../components/NavBar"
+import { Alert, Button, Input, Textarea } from "@heroui/react"
+import { useCopyToClipboard } from "@uidotdev/usehooks"
 
-const BoxText = styled.p`
-  font-family: "Open Sans", sans-serif;
-  font-weight: bold;
-  margin: 0px;
-`
-const ErrorBox = styled.div`
-  background-color: #ffaaaa;
-  padding: 10px;
-  margin-top: 10px;
-  margin-bottom: 10px;
-`
-const SuccessBox = styled.div`
-  background-color: #aaffaa;
-  padding: 10px;
-  margin-top: 10px;
-  margin-bottom: 10px;
-`
-const SubmitActions = styled.div`
-  display:grid;
-  grid-template-columns: auto auto;
-  padding-top: 10px;
-`
-
-const ShareHeader = styled.p`
-  font-family: "Open Sans", sans-serif;
-  margin-bottom: 0px;
-`
-const ShareLinkBox = styled.input`
-  width: 334px;
-  padding:2px;
-  border-width:1px;
-  font-family: "Open Sans", sans-serif;
-  font-size: 16px;
-`
-const WarningBox = styled.div`
-  background-color: #ffffaa;
-  padding: 10px;
-  margin-top: 10px;
-  margin-bottom: 10px;
-`
-const WarningTitle = styled.h2`
-  font-family: "Open Sans", sans-serif;
-  font-size: 16px;
-  font-weight: bold;
-  margin-top:0px;
-  margin-bottom: 5px;
-`
-const WarningText = styled.p`
-  font-family: "Open Sans", sans-serif;
-  margin: 0px;
-`
-const FormLabel = styled.label`
-  font-family: "Open Sans", sans-serif;
-  font-weight: bold;
-`
-const QuoteTextarea = styled.textarea`
-  width: 354px;
-  padding:2px;
-  border-width:1px;
-  font-family: "Open Sans", sans-serif;
-  font-size: 16px;
-`
-const NameInput = styled.input`
-  width: 354px;
-  padding:2px;
-  border-width:1px;
-  font-family: "Open Sans", sans-serif;
-  font-size: 16px;
-`
-const CharLimit = styled.p`
-  font-family: "Open Sans", sans-serif;
-  text-align: right;
-  margin-top: 0px;
-`
 export default function New_ () {
   const [quote, updateQuote] = useState("")
   const [name, updateName] = useState("")
@@ -86,6 +13,18 @@ export default function New_ () {
   const [errorMessage, updateErrorMessage] = useState("")
   const [shareToggle, updateShareToggle] = useState(false)
   const [shareLink, updateShareLink] = useState("")
+
+  const copy = useCopyToClipboard()[1]
+  const [copyToggle, copyToggleUpdate] = useState(false)
+
+  const copyShareLink = async () => {
+    await copy(shareLink)
+    copyToggleUpdate(true)
+    setTimeout(() => {
+      copyToggleUpdate(false)
+    }, 2000);
+  }
+
 
   const submitQuote = async (event: FormEvent<HTMLFormElement>) => {
     console.log("Submit")
@@ -161,73 +100,127 @@ export default function New_ () {
     updateShareToggle(false)
   }
 
-  let messageBox: ReactElement
-
-  if (submitError) {
-    messageBox = (
-      <ErrorBox>
-        <BoxText>{errorMessage}</BoxText>
-      </ErrorBox>
-    )
-  } else if (submitSuccess) {
-    messageBox = (
-      <SuccessBox>
-        <BoxText>Quote submitted!</BoxText>
-        <SubmitActions>
-          <div className="button-container">
-            <button 
-              disabled={shareToggle} 
-              onClick={() => {updateShareToggle(true)}}
-            >
-              Share this quote
-            </button>
-          </div>
-          <div className="button-container">
-            <button onClick={reset}>Write another quote</button>
-          </div>
-        </SubmitActions>
-          {shareToggle && (<div>
-            <ShareHeader>Copy this link to share:</ShareHeader>
-            <ShareLinkBox type="text" value={shareLink} disabled /> 
-          </div>)}
-      </SuccessBox>
-    )
-  } else {
-    messageBox = (
-      <WarningBox>
-        <WarningTitle>Warning</WarningTitle>
-        <WarningText>
-          Anything you submit here is publicly viewable. Do not submit any personal or sensitive information.
-        </WarningText>
-      </WarningBox>
-    )
-  }
-
   return (
     <div>
       <NavBar />
-      {messageBox}
+      <div className="pb-1">
+        {submitError ? (
+          <Alert
+            hideIcon
+            color="danger"
+            variant="faded"
+            classNames={{mainWrapper: 'ms-0', title: 'text-base font-bold', description: 'text-base'}}
+            title="Error"
+            description={errorMessage}
+          />
+        ) : submitSuccess ? (
+          <Alert 
+            hideIcon
+            color="success"
+            variant="faded"
+            classNames={{mainWrapper: 'ms-0', title: 'pb-2 text-base font-bold', description: 'w-full'}}
+            title="Quote submitted!"
+            description={<>
+              <div className="sm:grid sm:grid-cols-2">
+                <div className="pb-1 sm:pb-0 sm:pr-0.5">
+                  <Button
+                    color="success"
+                    className="w-full text-base font-bold"
+                    isDisabled={shareToggle}
+                    onPress={() => {updateShareToggle(true)}}
+                  >
+                    Share this quote
+                  </Button>
+                </div>
+                <div className="pb-1 sm:pb-0 sm:pl-0.5">
+                  <Button
+                    color="success"
+                    className="w-full text-base font-bold"
+                    onPress={reset}
+                  >
+                    Write another quote
+                  </Button>
+                </div>
+              </div>
+              {shareToggle && (
+                <div className="pt-1 pb-2">
+                  <p className="pt-1 text-base font-normal">Copy this link to share:</p>
+                  <div className="grid grid-cols-[1fr_auto] pt-1">
+                    <div>
+                      <Input 
+                        value={shareLink}
+                        isDisabled
+                        variant="bordered"
+                        classNames={{base: 'w-full', input: 'text-base cursor-text pointer-events-auto'}}
+                      />
+                    </div>
+                    <div className="pl-1">
+                      <Button 
+                        isDisabled={copyToggle}
+                        color="success"
+                        className="text-base font-bold"
+                        onPress={copyShareLink}
+                      >
+                        {copyToggle ? 'Copied!' : 'Copy'}
+                      </Button>
+                    </div>
+                  </div>
+                </div>
+              )}
+            </>}
+          />
+        ) : (
+          <Alert
+            hideIcon
+            color="warning"
+            variant="faded"
+            classNames={{mainWrapper: 'ms-0', title: 'text-base font-bold', description: 'text-base'}}
+            title="Warning"
+            description="Anything you submit here can be seen by anyone on the internet. Do not submit any personal or sensitive information."
+          />
+        )}
+      </div>
+      
       <form onSubmit={submitQuote}>
-        <FormLabel htmlFor="quote">Your quote</FormLabel>
-        <QuoteTextarea 
-          id="quote" 
-          name="quote" 
+        <label htmlFor="quote" className="block font-bold py-1">Your Quote</label>
+        <Textarea 
+          id="quote"
+          value={quote}
+          onValueChange={updateQuote}
+          isDisabled={submitToggle}
+          autoComplete="off"
           rows={4}
-          disabled={submitToggle} 
-          value={quote} 
-          onChange={(e) => {updateQuote(e.target.value)}}
+          variant="bordered"
+          classNames={{base: 'w-full', input: 'text-base'}}
         />
-        <CharLimit className={`${quote.length > 400 ? "warn" : ""}`}>{quote.length}/400</CharLimit>
-        <FormLabel htmlFor="name">Your name</FormLabel>
-        <NameInput 
-          id="name" 
-          name="name" 
-          disabled={submitToggle} 
-          value={name} 
-          onChange={(e) => {updateName(e.target.value)}}
+        <p className={`text-xs text-right transition-colors ${quote.length > 400 ? 'text-red-500 dark:text-red-400' : ''}`}>
+          {quote.length}/400
+        </p>
+        
+        <label htmlFor="name" className="block font-bold py-1">Your Name</label>
+        <Input 
+          id="name"
+          value={name}
+          onValueChange={updateName}
+          isDisabled={submitToggle}
+          autoComplete="off"
+          variant="bordered"
+          classNames={{base: 'w-full', input: 'text-base'}}
         />
-        <CharLimit className={`${name.length > 40 ? "warn" : ""}`}>{name.length}/40</CharLimit>
-        <button type="submit" disabled={submitToggle}>Submit quote</button>
+        <p className={`text-xs text-right transition-colors ${name.length > 40 ? 'text-red-500 dark:text-red-400' : ''}`}>
+          {name.length}/400
+        </p>
+        
+        <div className="pt-1">
+          <Button
+            type="submit"
+            isDisabled={submitToggle}
+            color="primary"
+            className="w-full text-base font-bold"
+          >
+            Submit Quote
+          </Button>
+        </div>
       </form>
     </div>
   )

@@ -1,40 +1,43 @@
-import { useLocation, useNavigate } from "react-router"
-import styled from "styled-components"
-
-const Bar = styled.div`
-  display: grid;
-  grid-template-columns: auto auto auto;
-  margin-bottom: 10px;
-`
+import { Button } from "@heroui/react"
+import { Link } from "react-router"
 
 export default function NavBar () {
-  const location = useLocation()
-  const navigate = useNavigate()
 return (
-  <Bar>
-    <div className="button-container">
-      <button 
-        disabled={location.pathname === "/random"} 
-        onClick={() => {navigate("/random")}}
-      >
-        Random quote
-      </button>
+  <div className="pb-2">
+    <div className="sm:grid sm:grid-cols-3 gap-2 border-y border-y-blue-400 dark:border-y-blue-500">
+      <div className="py-1">
+        <Button
+          color="primary"
+          variant="light"
+          as={Link}
+          to="/random"
+          className="w-full text-base"
+        >
+          Random Quote
+        </Button>
+      </div>
+      <div className="py-1">
+        <Button
+          color="primary"
+          variant="light"
+          as={Link}
+          to="/popular"
+          className="w-full text-base"
+        >
+          Popular Quote
+        </Button>
+      </div>
+      <div className="py-1">
+        <Button
+          color="primary"
+          variant="light"
+          as={Link}
+          to="/new"
+          className="w-full text-base"
+        >
+          Write Your Own
+        </Button>
+      </div>
     </div>
-    <div className="button-container">
-      <button 
-        disabled={location.pathname === "/popular"} 
-        onClick={() => {navigate("/popular")}}
-      >
-        Popular quote
-      </button>
-    </div>
-    <div className="button-container">
-      <button 
-        disabled={location.pathname === "/new"} 
-        onClick={() => {navigate("/new")}}
-      >
-        Write your own
-      </button>
-    </div>
-  </Bar>
+  </div>
 )}

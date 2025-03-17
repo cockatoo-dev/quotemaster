@@ -1,8 +1,10 @@
 import { defineConfig } from 'vite'
 import vue from '@vitejs/plugin-vue'
+import ui from '@nuxt/ui/vite'
 
 // https://vite.dev/config/
 export default defineConfig({
-  plugins: [vue()],
-  base: '/quotemaster/build-vue/'
+  base: '/quotemaster/build-vue/',
+  plugins: [vue(), ui()],
+  server: {port: 8539}
 })
