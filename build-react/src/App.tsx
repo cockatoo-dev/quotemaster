@@ -1,33 +1,8 @@
 import { useEffect, useState } from 'react'
-import './style.css'
-import styled from 'styled-components'
 import { API_HOST } from './utils/config'
 import { RouterView } from './router'
-
-const Header = styled.h1`
-  font-family: "Open Sans", sans-serif;
-  font-size: 32px;
-  font-weight: bold;
-  text-align: center;
-  line-height: 16px;
-`
-const BuildInfo = styled.p`
-  font-family: "Open Sans", sans-serif;
-  text-align: center;
-`
-const ContentArea = styled.div`
-  width: 360px;
-  margin: 0 auto;
-`
-const NoApi = styled.div`
-  width: 340px;
-  padding: 10px;
-  align-items: center;
-  background-color: #ffaaaa;
-  margin: auto;
-  font-family: "Open Sans", sans-serif;
-  text-align: center;
-`
+import { Alert, Button, Link } from '@heroui/react'
+import { useMediaQuery } from '@uidotdev/usehooks'
 
 function App() {
   const [apiOnline, apiOnlineUpdate] = useState(true)
@@ -47,32 +22,62 @@ function App() {
     }
   }
 
+  const isDarkMode = useMediaQuery('(prefers-color-scheme: dark)')
+  useEffect(() => {
+    if (isDarkMode) {
+      document.documentElement.classList.add('dark')
+    } else {
+      document.documentElement.classList.remove('dark')
+    }
+  }, [isDarkMode])
+
   useEffect(() => {doHandshake()}, [])
 
   return (
-    <div>
-      <Header>Quotemaster</Header>
-      <BuildInfo>React build v0.5.0</BuildInfo>
-      <BuildInfo>
-        <a 
-          href="https://github.com/cockatoo-dev/quotemaster/"
-          rel="noreferrer noopener"
-        >
-          View source on Github
-        </a>
-      </BuildInfo>
+    <div className="w-11/12 max-w-[640px] mx-auto">
+      <div className="p-1">
+        <h1 className="py-2 text-center text-4xl font-bold">Quotemaster</h1>
+        <p className="pb-1 text-center">React build v0.9.0</p>
+        <div className='text-center'>
+          <Button
+            color="primary"
+            variant="light"
+            className="text-base"
+            as={Link}
+            href="https://github.com/cockatoo-dev/quotemaster/"
+            target='_blank'
+            rel="noreferrer noopener"
+          >
+            View source on Github
+          </Button>
+        </div>
+      </div>
       
       {apiOnline ? (
-        <ContentArea>
+        <div className='pt-1'>
           <RouterView />
-        </ContentArea>
+        </div>
       ) : (
-        <NoApi>
-          <p>Unable to reach API server.</p>
-          <div className="button-container">
-            <button onClick={() => {doHandshake()}}>Retry</button>
-          </div>
-        </NoApi>
+        <div className='py-1'>
+          <Alert 
+            hideIcon
+            color="danger"
+            variant='faded'
+            classNames={{mainWrapper: 'ms-0', title: 'pb-1 text-base text-center', description: 'mx-auto'}}
+            title="Unable to reach API server."
+            description={
+              <div>
+                <Button
+                  color='danger'
+                  className='text-base font-bold'
+                  onPress={doHandshake}
+                >
+                  Retry
+                </Button>
+              </div>
+            }
+          />
+        </div>
       )}
     </div>
   )

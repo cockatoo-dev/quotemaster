@@ -21,6 +21,14 @@
   const { copy } = useClipboard({legacy: true})
   const copyToggle = ref(false)
 
+  const copyShareLink = async () => {
+    await copy(shareLink.value)
+    copyToggle.value = true
+    setTimeout(() => {
+      copyToggle.value = false
+    }, 2000);
+  }
+
   const submitQuote = async () => {
     submitError.value = false
     
@@ -91,67 +99,66 @@
     <NavBar />
     
     <div class="pb-1">
-        <Alert
+      <Alert
         v-if="submitError"
         color="error"
         variant="subtle"
-      >
-        <template #title>
-          <div class="text-base text-center">{{ errorMessage }}</div>
-        </template>
-      </Alert>
+        :ui="{title: 'text-base font-bold', description: 'text-base opacity-100'}"
+        title="Error"
+        :description="errorMessage"
+      />
       <Alert 
         v-else-if="submitSuccess"
         color="success"
         variant="subtle"
+        :ui="{title: 'pb-1 text-base font-bold', description: 'w-full'}"
+        title="Quote submitted!"
       >
-        <template #title>
-          <div class="text-base font-bold">Quote submitted!</div>
-        </template>
         <template #description>
-          <div class="grid grid-cols-2">
-            <div class="pr-0.5">
+          <div class="sm:grid sm:grid-cols-2">
+            <div class="pb-1 sm:pb-0 sm:pr-0.5">
               <Button 
-                label="Share this quote"
                 color="success"
                 class="block w-full text-center text-base font-bold"
                 :disabled="shareToggle"
                 @click="() => {shareToggle = true}"
-              />
+              >
+                Share this quote
+              </Button>
             </div>
-            <div class="pl-0.5">
+            <div class="pb-1 sm:pb-0 sm:pl-0.5">
               <Button 
-                label="Write another quote"
                 color="success"
                 class="block w-full text-center text-base font-bold"
                 @click="reset"
-              />
+              >
+                Write another quote
+              </Button>
             </div>
           </div>
 
           <div v-if="shareToggle" class="pt-1 pb-2">
-          <p>Copy this link to share:</p>
-          <div class="grid grid-cols-[1fr_auto] pt-1">
-            <div>
-              <Input 
-                :model-value="shareLink" 
-                disabled 
-                :ui="{root: 'w-full', base: 'text-base disabled:cursor-text'}"
-              />
-            </div>
-            <div class="pl-1">
-              <Button 
-                :label="copyToggle ? 'Copied!' : 'Copy'"
-                :disabled="copyToggle"
-                class="text-base font-bold"
-                @click="() => {
-                  copy(shareLink)
-                  copyToggle = true
-                }"
-              />
+            <p class="pt-1 text-base font-normal">Copy this link to share:</p>
+            <div class="grid grid-cols-[1fr_auto] pt-1">
+              <div>
+                <Input 
+                  :model-value="shareLink" 
+                  disabled 
+                  :ui="{root: 'w-full', base: 'text-base disabled:cursor-text'}"
+                />
+              </div>
+              <div class="pl-1">
+                <Button 
+                  :disabled="copyToggle"
+                  color="success"
+                  class="text-base font-bold"
+                  @click="copyShareLink"
+                >
+                  {{copyToggle ? 'Copied!' : 'Copy'}}
+                </Button>
+              </div>
             </div>
           </div>
-        </div>
         </template>
       </Alert>
       
@@ -159,16 +166,10 @@
         v-else
         color="warning"
         variant="subtle"
-      >
-        <template #title>
-          <div class="text-base font-bold">Warning</div>
-        </template>
-        <template #description>
-          <div class="text-base">
-            Anything you submit here can be seen by anyone on the internet. Do not submit any personal or sensitive information.
-          </div>
-        </template>
-      </Alert>
+        :ui="{title: 'text-base font-bold', description: 'text-base font-normal opacity-100'}"
+        title="Warning"
+        description="Anything you submit here can be seen by anyone on the internet. Do not submit any personal or sensitive information."
+      />
     </div>
 
     <form @submit.prevent="submitQuote">
@@ -179,9 +180,11 @@
         :disabled="submitToggle"
         autocomplete="off"
         :rows="4"
-        :ui="{root: 'block w-full', base: 'text-base'}"
+        :ui="{root: 'w-full', base: 'text-base'}"
       />
-      <p class="text-xs text-right" :class="{warn:quote.length > 400}">{{quote.length}}/400</p>
+      <p :class="`text-xs text-right transition-colors ${quote.length > 400 ? 'text-red-500 dark:text-red-400' : ''}`">
+        {{quote.length}}/400
+      </p>
 
       <label for="name" class="block font-bold py-1">Your Name</label>
       <Input
@@ -189,17 +192,20 @@
         v-model="name"
         :disabled="submitToggle"
         autocomplete="off"
-        :ui="{root: 'block w-full', base: 'text-base'}"
+        :ui="{root: 'w-full', base: 'text-base'}"
       />
-      <p class="text-xs text-right" :class="{warn:name.length > 40}">{{name.length}}/40</p>
+      <p :class="`text-xs text-right transition-colors ${name.length > 40 ? 'text-red-500 dark:text-red-400' : ''}`">
+        {{name.length}}/40
+      </p>
 
       <div class="pt-1">
         <Button 
           type="submit"
-          label="Submit Quote"
           :disabled="submitToggle"
           class="block w-full text-base text-center font-bold"
-        />
+        >
+          Submit Quote
+        </Button>
       </div>
     </form>
   </div>

@@ -18,6 +18,14 @@
   const { copy } = useClipboard({legacy: true})
   const copyToggle = ref(false)
 
+  const copyShareLink = async () => {
+    await copy(shareLink.value)
+    copyToggle.value = true
+    setTimeout(() => {
+      copyToggle.value = false
+    }, 2000);
+  }
+
   const newQuoteState = () => {
     if (props.quote != null) {
       likeToggle.value = false
@@ -61,23 +69,26 @@
     <div v-else>
       <p class="pt-4 pb-2 text-justify indent-12">{{quote.quote}}</p>
       <p class="pt-2 pb-4 text-right italic">- {{quote.name}}</p>
-      <div class="grid grid-cols-2 py-2">
-        <div class="pr-0.5">
+      <div class="sm:grid sm:grid-cols-2 py-2">
+        <div class="pb-1 sm:pb-0 sm:pr-0.5">
           <Button 
-            :label="`${likeSuccess ? 'Liked' : 'Like'} this quote`"
             :disabled="likeToggle"
+            color="primary"
             class="block w-full text-center text-base font-bold"
             @click="likeQuote"
-          />
+          >
+            {{likeSuccess ? 'Liked this quote' : 'Like this quote'}}
+          </Button>
         </div>
-        <div class="pl-0.5">
+        <div class="pb-1 sm:pb-0 sm:pl-0.5">
           <Button 
-            label="Share this quote"
             :disabled="shareToggle"
             color="secondary"
             class="block w-full text-center text-base font-bold"
             @click="() => {shareToggle = true}"
-          />
+          >
+            Share this quote
+          </Button>
         </div>
       </div>
       <div v-if="shareToggle" class="pt-1 pb-2">
@@ -92,14 +103,13 @@
           </div>
           <div class="pl-1">
             <Button 
-              :label="copyToggle ? 'Copied!' : 'Copy'"
               :disabled="copyToggle"
+              color="primary"
               class="text-base font-bold"
-              @click="() => {
-                copy(shareLink)
-                copyToggle = true
-              }"
-            />
+              @click="copyShareLink"
+            >
+              {{copyToggle ? 'Copied!' : 'Copy'}}
+            </Button>
           </div>
         </div>
       </div>

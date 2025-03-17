@@ -32,31 +32,33 @@
         <p class="pb-1 text-center">Vue build v0.9.0</p>
         <div class="text-center">
           <Button 
-            label="View source on Github" 
+            color="primary"
             variant="ghost" 
-            class="text-base"
+            class="text-base font-normal"
             to="https://github.com/cockatoo-dev/quotemaster/"
             target="_blank"
             rel="noreferrer noopener"
-          />
+          >
+            View source on Github
+          </Button>
         </div>
       </div>
-      <div v-if="!apiOnline" class="p-1">
+      <div v-if="!apiOnline" class="py-1">
         <Alert
           color="error"
           variant="subtle"
+          :ui="{title: 'pb-1 text-center text-base font-normal', description: 'mx-auto'}"
+          title="Unable to reach API server."
         >
-          <template #title>
-            <div class="pt-1 text-base text-center">Unable to reach API server.</div>
-          </template>
           <template #description>
-            <div class="text-center">
+            <div>
               <Button 
-                label="Retry"
                 color="error"
                 class="text-base font-bold"
                 @click="doHandshake"
-              />
+              >
+                Retry
+              </Button>
             </div>
           </template>
         </Alert>

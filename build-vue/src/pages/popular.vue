@@ -32,18 +32,22 @@
 <template>
   <div>
     <NavBar />
-    <Alert v-if="error" color="error" variant="subtle">
-      <template #title>
-        <div class="text-base text-center">Unable to load quote.</div>
-      </template>
+    <Alert 
+      v-if="error" 
+      color="error" 
+      variant="subtle"
+      :ui="{title: 'pb-1 text-center text-base font-normal', description: 'mx-auto'}"
+      title="Unable to load quote."
+    >
       <template #description>
-        <div class="text-center">
+        <div>
           <Button 
-            label="Retry"
             color="error"
-            class="text-base"
+            class="text-base font-bold"
             @click="getQuote"
-          />
+          >
+            Retry
+          </Button>
         </div>
       </template>
     </Alert>
@@ -51,11 +55,12 @@
       <QuoteRenderer :quote="quote" />
       <div class="pb-1 text-center">
         <Button 
-          label="Get another quote"
           variant="ghost"
-          class="text-base"
+          class="text-base font-normal"
           @click="getQuote"
-        />
+        >
+          Get another quote
+        </Button>
       </div>
     </div>
   </div>
