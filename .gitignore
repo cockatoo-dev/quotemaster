@@ -1,5 +1,7 @@
 build-react/node_modules
 build-vue/node_modules
+build-vue/auto-imports.d.ts
+build-vue/components.d.ts
 
 # Logs
 logs
