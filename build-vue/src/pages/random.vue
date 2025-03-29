@@ -6,6 +6,7 @@
   import type { apiQuoteType } from "../utils/types"
   import Alert from "@nuxt/ui/runtime/components/Alert.vue"
   import Button from "@nuxt/ui/runtime/components/Button.vue"
+  import HIArrowPath from "../icons/HIArrowPath.vue"
 
   const quote = ref<apiQuoteType | null>(null)
   const error = ref(false)
@@ -46,6 +47,7 @@
             class="text-base font-bold"
             @click="getQuote"
           >
+            <template #leading><HIArrowPath /></template>
             Retry
           </Button>
         </div>
@@ -59,6 +61,7 @@
           class="text-base font-normal"
           @click="getQuote"
         >
+          <template #leading><HIArrowPath /></template>
           Get another quote
         </Button>
       </div>

@@ -4,7 +4,6 @@ import ui from '@nuxt/ui/vite'
 
 // https://vite.dev/config/
 export default defineConfig({
-  base: '/quotemaster/build-vue/',
-  plugins: [vue(), ui()],
+  plugins: [vue(), ui({colorMode: false})],
   server: {port: 8539}
 })

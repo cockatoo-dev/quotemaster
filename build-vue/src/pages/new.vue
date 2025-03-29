@@ -8,6 +8,10 @@
   import Input from "@nuxt/ui/runtime/components/Input.vue"
   import Textarea from "@nuxt/ui/runtime/components/Textarea.vue"
   import { useClipboard } from "@vueuse/core"
+  import HIShare from "../icons/HIShare.vue"
+  import HIPencilSquare from "../icons/HIPencilSquare.vue"
+  import HIDocumentDuplicate from "../icons/HIDocumentDuplicate.vue"
+  import HIPaperAirplane from "../icons/HIPaperAirplane.vue"
 
   const quote = ref("")
   const name = ref("")
@@ -123,6 +127,7 @@
                 :disabled="shareToggle"
                 @click="() => {shareToggle = true}"
               >
+                <template #leading><HIShare /></template>
                 Share this quote
               </Button>
             </div>
@@ -132,6 +137,7 @@
                 class="block w-full text-center text-base font-bold"
                 @click="reset"
               >
+                <template #leading><HIPencilSquare /></template>
                 Write another quote
               </Button>
             </div>
@@ -154,6 +160,7 @@
                   class="text-base font-bold"
                   @click="copyShareLink"
                 >
+                  <template #leading><HIDocumentDuplicate /></template>
                   {{copyToggle ? 'Copied!' : 'Copy'}}
                 </Button>
               </div>
@@ -204,6 +211,7 @@
           :disabled="submitToggle"
           class="block w-full text-base text-center font-bold"
         >
+          <template #leading><HIPaperAirplane /></template>
           Submit Quote
         </Button>
       </div>

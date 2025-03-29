@@ -3,6 +3,9 @@ import { apiQuoteType } from "../utils/types"
 import { API_HOST, HOST } from "../utils/config"
 import { Button, Input } from "@heroui/react"
 import { useCopyToClipboard } from "@uidotdev/usehooks"
+import HIHeart from "../icons/HIHeart"
+import HIShare from "../icons/HIShare"
+import HIDocumentDuplicate from "../icons/HIDocumentDuplicate"
 
 type propsType = {
   quote: apiQuoteType | null
@@ -81,6 +84,7 @@ export default function QuoteRenderer (props: propsType) {
                 color="primary"
                 className="w-full text-base font-bold"
                 onPress={likeQuote}
+                startContent={<HIHeart />}
               >
                 {likeSuccess ? 'Liked this quote' : 'Like this quote'}
               </Button>
@@ -91,6 +95,7 @@ export default function QuoteRenderer (props: propsType) {
                 color="secondary"
                 className="w-full text-base font-bold"
                 onPress={() => {shareToggleUpdate(true)}}
+                startContent={<HIShare />}
               >
                 Share this quote
               </Button>
@@ -116,6 +121,7 @@ export default function QuoteRenderer (props: propsType) {
                 color="primary"
                 className="text-base font-bold"
                 onPress={copyShareLink}
+                startContent={<HIDocumentDuplicate />}
               >
                 {copyToggle ? 'Copied!' : 'Copy'}
               </Button>

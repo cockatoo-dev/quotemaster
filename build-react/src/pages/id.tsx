@@ -5,6 +5,7 @@ import QuoteRenderer from "../components/QuoteRenderer"
 import { apiErrorType, apiQuoteType } from "../utils/types"
 import { API_HOST } from "../utils/config"
 import { Alert, Button } from "@heroui/react"
+import HIArrowPath from "../icons/HIArrowPath.js"
 
 export default function Id () {
   const id = useParams().id
@@ -42,7 +43,7 @@ export default function Id () {
           hideIcon
           color="danger"
           variant="faded"
-          classNames={{mainWrapper: 'ms-0', title: 'pb-1 text-base text-center', description: 'mx-auto'}}
+          classNames={{mainWrapper: 'ms-0', title: 'pb-1 text-base text-center font-normal', description: 'mx-auto'}}
           title={errorMessage}
           description={
             <div>
@@ -50,6 +51,7 @@ export default function Id () {
                 color='danger'
                 className='text-base font-bold'
                 onPress={getQuote}
+                startContent={<HIArrowPath />}
               >
                 Retry
               </Button>

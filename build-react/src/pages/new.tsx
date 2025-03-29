@@ -3,6 +3,10 @@ import { API_HOST, HOST } from "../utils/config"
 import NavBar from "../components/NavBar"
 import { Alert, Button, Input, Textarea } from "@heroui/react"
 import { useCopyToClipboard } from "@uidotdev/usehooks"
+import HIShare from "../icons/HIShare"
+import HIPencilSquare from "../icons/HIPencilSquare"
+import HIDocumentDuplicate from "../icons/HIDocumentDuplicate"
+import HIPaperAirplane from "../icons/HIPaperAirplane"
 
 export default function New_ () {
   const [quote, updateQuote] = useState("")
@@ -128,6 +132,7 @@ export default function New_ () {
                     className="w-full text-base font-bold"
                     isDisabled={shareToggle}
                     onPress={() => {updateShareToggle(true)}}
+                    startContent={<HIShare />}
                   >
                     Share this quote
                   </Button>
@@ -137,6 +142,7 @@ export default function New_ () {
                     color="success"
                     className="w-full text-base font-bold"
                     onPress={reset}
+                    startContent={<HIPencilSquare />}
                   >
                     Write another quote
                   </Button>
@@ -160,6 +166,7 @@ export default function New_ () {
                         color="success"
                         className="text-base font-bold"
                         onPress={copyShareLink}
+                        startContent={<HIDocumentDuplicate />}
                       >
                         {copyToggle ? 'Copied!' : 'Copy'}
                       </Button>
@@ -217,6 +224,7 @@ export default function New_ () {
             isDisabled={submitToggle}
             color="primary"
             className="w-full text-base font-bold"
+            startContent={<HIPaperAirplane />}
           >
             Submit Quote
           </Button>
