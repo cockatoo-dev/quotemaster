@@ -5,6 +5,9 @@
   import Button from "@nuxt/ui/runtime/components/Button.vue";
   import Input from "@nuxt/ui/runtime/components/Input.vue";
   import { useClipboard } from "@vueuse/core";
+  import HIHeart from "../icons/HIHeart.vue";
+  import HIShare from "../icons/HIShare.vue";
+  import HIDocumentDuplicate from "../icons/HIDocumentDuplicate.vue";
 
   const props = defineProps<{
     quote: apiQuoteType | null
@@ -74,9 +77,10 @@
           <Button 
             :disabled="likeToggle"
             color="primary"
-            class="block w-full text-center text-base font-bold"
+            class="w-full justify-center text-base font-bold"
             @click="likeQuote"
           >
+            <template #leading><HIHeart /></template>
             {{likeSuccess ? 'Liked this quote' : 'Like this quote'}}
           </Button>
         </div>
@@ -84,9 +88,10 @@
           <Button 
             :disabled="shareToggle"
             color="secondary"
-            class="block w-full text-center text-base font-bold"
+            class="w-full justify-center text-base font-bold"
             @click="() => {shareToggle = true}"
           >
+            <template #leading><HIShare /></template>
             Share this quote
           </Button>
         </div>
@@ -108,6 +113,7 @@
               class="text-base font-bold"
               @click="copyShareLink"
             >
+              <template #leading><HIDocumentDuplicate /></template>
               {{copyToggle ? 'Copied!' : 'Copy'}}
             </Button>
           </div>

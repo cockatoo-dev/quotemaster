@@ -7,6 +7,7 @@
   import type { apiErrorType, apiQuoteType } from "../utils/types"
   import Alert from "@nuxt/ui/runtime/components/Alert.vue"
   import Button from "@nuxt/ui/runtime/components/Button.vue"
+  import HIArrowPath from "../icons/HIArrowPath.vue"
 
   const route = useRoute()
   const id = route.params.id
@@ -55,6 +56,7 @@
             class="text-base font-bold"
             @click="getQuote"
           >
+            <template #leading><HIArrowPath /></template>
             Retry
           </Button>
         </div>

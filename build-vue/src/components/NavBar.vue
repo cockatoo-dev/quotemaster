@@ -1,5 +1,8 @@
 <script setup lang="ts">
   import Button from '@nuxt/ui/runtime/components/Button.vue'
+  import HILightBulb from '../icons/HILightBulb.vue';
+  import HIStar from '../icons/HIStar.vue';
+  import HIPencilSquare from '../icons/HIPencilSquare.vue';
 </script>
 
 <template>
@@ -9,9 +12,10 @@
         <Button 
           color="primary"
           variant="ghost"
-          class="block w-full text-base text-center font-normal"
+          class="w-full justify-center text-base font-normal"
           to="/random"
         >
+          <template #leading><HILightBulb /></template>
           Random Quote
         </Button>
       </div>
@@ -19,19 +23,21 @@
         <Button 
           color="primary"
           variant="ghost"
-          class="block w-full text-base text-center font-normal"
+          class="w-full justify-center text-base font-normal"
           to="/popular"
         >
-          Popular Quote
+          <template #leading><HIStar /></template>
+          <div>Popular Quote</div>
         </Button>
       </div>
       <div class="py-1">
         <Button 
           color="primary"
           variant="ghost"
-          class="block w-full text-base text-center font-normal"
+          class="w-full justify-center text-base font-normal"
           to="/new"
         >
+          <template #leading><HIPencilSquare /></template>
           Write Your Own
         </Button>
       </div>

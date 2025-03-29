@@ -3,6 +3,7 @@ import { API_HOST } from "../utils/config"
 import NavBar from "../components/NavBar"
 import QuoteRenderer from "../components/QuoteRenderer"
 import { Alert, Button } from "@heroui/react"
+import HIArrowPath from "../icons/HIArrowPath"
 
 export default function Random () {
   const [quote, updateQuote] = useState(null)
@@ -34,7 +35,7 @@ export default function Random () {
           hideIcon
           color="danger"
           variant="faded"
-          classNames={{mainWrapper: 'ms-0', title: 'pb-1 text-base text-center', description: 'mx-auto'}}
+          classNames={{mainWrapper: 'ms-0', title: 'pb-1 text-base text-center font-normal', description: 'mx-auto'}}
           title="Unable to load quote."
           description={
             <div>
@@ -42,6 +43,7 @@ export default function Random () {
                 color='danger'
                 className='text-base font-bold'
                 onPress={getQuote}
+                startContent={<HIArrowPath />}
               >
                 Retry
               </Button>
@@ -57,6 +59,7 @@ export default function Random () {
               variant="light"
               className="text-base"
               onPress={getQuote}
+              startContent={<HIArrowPath />}
             >
               Get another quote
             </Button>
