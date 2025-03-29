@@ -209,7 +209,7 @@
         <Button 
           type="submit"
           :disabled="submitToggle"
-          class="block w-full text-base text-center font-bold"
+          class="w-full justify-center text-base font-bold"
         >
           <template #leading><HIPaperAirplane /></template>
           Submit Quote
