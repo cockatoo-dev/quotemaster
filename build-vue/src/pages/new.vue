@@ -12,6 +12,7 @@
   import HIPencilSquare from "../icons/HIPencilSquare.vue"
   import HIDocumentDuplicate from "../icons/HIDocumentDuplicate.vue"
   import HIPaperAirplane from "../icons/HIPaperAirplane.vue"
+  import HIExclamationTriangle from "../icons/HIExclamationTriangle.vue"
 
   const quote = ref("")
   const name = ref("")
@@ -176,7 +177,9 @@
         :ui="{title: 'text-base font-bold', description: 'text-base font-normal opacity-100'}"
         title="Warning"
         description="Anything you submit here can be seen by anyone on the internet. Do not submit any personal or sensitive information."
-      />
+      >
+        <template #leading><HIExclamationTriangle /></template>
+      </Alert>
     </div>
 
     <form @submit.prevent="submitQuote">
@@ -187,7 +190,7 @@
         :disabled="submitToggle"
         autocomplete="off"
         :rows="4"
-        :ui="{root: 'w-full', base: 'text-base'}"
+        :ui="{root: 'w-full', base: 'text-base text-black dark:text-white'}"
       />
       <p :class="`text-xs text-right transition-colors ${quote.length > 400 ? 'text-red-500 dark:text-red-400' : ''}`">
         {{quote.length}}/400
@@ -199,7 +202,7 @@
         v-model="name"
         :disabled="submitToggle"
         autocomplete="off"
-        :ui="{root: 'w-full', base: 'text-base'}"
+        :ui="{root: 'w-full', base: 'text-base text-black dark:text-white'}"
       />
       <p :class="`text-xs text-right transition-colors ${name.length > 40 ? 'text-red-500 dark:text-red-400' : ''}`">
         {{name.length}}/40

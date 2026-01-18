@@ -7,6 +7,7 @@ import HIShare from "../icons/HIShare"
 import HIPencilSquare from "../icons/HIPencilSquare"
 import HIDocumentDuplicate from "../icons/HIDocumentDuplicate"
 import HIPaperAirplane from "../icons/HIPaperAirplane"
+import HIExclamationTriangle from "../icons/HIExclamationTriangle"
 
 export default function New_ () {
   const [quote, updateQuote] = useState("")
@@ -178,12 +179,12 @@ export default function New_ () {
           />
         ) : (
           <Alert
-            hideIcon
             color="warning"
             variant="faded"
             classNames={{mainWrapper: 'ms-0', title: 'text-base font-bold', description: 'text-base'}}
             title="Warning"
             description="Anything you submit here can be seen by anyone on the internet. Do not submit any personal or sensitive information."
+            icon={<HIExclamationTriangle />}
           />
         )}
       </div>
@@ -198,7 +199,7 @@ export default function New_ () {
           autoComplete="off"
           rows={4}
           variant="bordered"
-          classNames={{base: 'w-full', input: 'text-base'}}
+          classNames={{base: 'w-full', input: 'text-base text-black dark:text-white'}}
         />
         <p className={`text-xs text-right transition-colors ${quote.length > 400 ? 'text-red-500 dark:text-red-400' : ''}`}>
           {quote.length}/400
@@ -212,7 +213,7 @@ export default function New_ () {
           isDisabled={submitToggle}
           autoComplete="off"
           variant="bordered"
-          classNames={{base: 'w-full', input: 'text-base'}}
+          classNames={{base: 'w-full', input: 'text-base text-black dark:text-white'}}
         />
         <p className={`text-xs text-right transition-colors ${name.length > 40 ? 'text-red-500 dark:text-red-400' : ''}`}>
           {name.length}/400
