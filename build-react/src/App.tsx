@@ -35,7 +35,7 @@ function App () {
   useEffect(() => {doHandshake()}, [])
 
   return (
-    <div className="w-11/12 max-w-[640px] mx-auto">
+    <div className="w-11/12 max-w-[640px] mx-auto text-black dark:text-white">
       <div className="p-1">
         <h1 className="py-2 text-center text-4xl font-bold">Quotemaster</h1>
         <p className="pb-1 text-center">React build v1.0.0</p>
